@@ -1,60 +1,68 @@
-import * as React from "react";
-import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-  Button,
-} from "@mui/material";
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Card, CardMedia, CardContent, CardActions, Button, Typography, IconButton, TextField } from '@material-ui/core';
+import { useStyles } from "./Grocerty-Item-Card.styles";
+import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 
-const useStyles = makeStyles((theme) => ({
-  cardStyles: {
-    maxWidth: 282,
-    maxHeight: 374,
-    borderRadius: 13,
-    height: 374,
-    width: 282,
-    backgroundColor: "#909592",
-  },
-  imageStyles: {
-    height: 220,
-    width: 220,
-    marginTop: 10,
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
-  categoryTitle: {
-    fontFamily: "Proxima Nova",
-    fontSize: 16,
-    fontWeight: 400,
-    textAlign: "left",
-    paddingLeft: 40,
-    color: "#0D3823",
-  },
-  categoryTitleArea: {
-    marginLeft: "auto",
-    marginRight: "auto",
-  },
-}));
+const GroceryItemCardRenderer: React.FC = () => {
+  const item = {
+    discount: 20,
+    title: '250gms India Gate Jeera Rice',
+    pricePerVolume: '2.50 EUR / Kilogram',
+    currentPrice: 90,
+    originalPrice: 120,
+  };
+  const image = "https://via.placeholder.com/216x216";
+  const classes = useStyles();
 
-const GroceryItemCardRenderer = () => {
   return (
-    <Card className={useStyles().cardStyles}>
-      <CardMedia
-        component="img"
-        className={useStyles().imageStyles}
-        image="https://i5.walmartimages.com/asr/90cdb9fd-c2d6-4f10-90c4-bbc16c6963a2.8590ae0e3e7ab073316455a9dd9cfd87.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"
-        alt="green iguana"
-      />
-      <CardContent className={useStyles().categoryTitleArea}>
-        <Typography className={useStyles().categoryTitle}>Lizards</Typography>
+    <Card className={classes.cardStyles}>
+      <div className={classes.container1}></div>
+      <div className={classes.container2}>
+        <div className={classes.overlay}></div>
+        <div className={classes.imageContainer}>
+          <div className={classes.image}>
+            <img src={image} alt="Product" />
+          </div>
+        </div>
+      </div>
+      <div className={classes.discountContainer}>
+        <div className={classes.discountText}>{item.discount}% OFF</div>
+      </div>
+      <CardContent className={classes.title}>{item.title}</CardContent>
+      <CardContent className={classes.price}>{item.pricePerVolume}</CardContent>
+      <CardContent className={classes.priceContainer}>
+        <Typography className={classes.priceValue}>{item.currentPrice} {item.originalPrice}</Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+      <CardActions className={classes.actionButtonsContainer}>
+        <IconButton className={classes.cardItemIcons}>
+          <RemoveIcon />
+        </IconButton>
+        <TextField
+          className={classes.cardItemTextField}
+          variant="outlined"
+          size="small"
+        />
+        <IconButton className={classes.cardItemIcons}>
+          <AddIcon />
+        </IconButton>
+        <div className={classes.addButton}>
+          <div className={classes.addText}>Add</div>
+        </div>
       </CardActions>
+      {/* <CardActions className={classes.actionButtonsContainer}>
+        <div className={classes.quantityContainer}>
+          <div className={classes.quantityOverlay}></div>
+          <div className={classes.quantityText}>1</div>
+          <div className={classes.quantityOverlay}></div>
+          <div className={classes.quantityOverlay}></div>
+          <div className={classes.quantityOverlay}></div>
+          <div className={classes.quantityOverlay}></div>
+
+        </div>
+        
+      </CardActions> */}
     </Card>
   );
 };
