@@ -1,49 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
   Typography,
   IconButton,
   Grid,
+  Container
 } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-
-// Define styles for the component
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    card: {
-      minWidth: 275,
-      textAlign: "center",
-      height: "auto",
-      minHeight: 200,
-    },
-    cardContent: {
-      height: "100%",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
-    },
-    arrowsContainer: {
-      display: "flex",
-      justifyContent: "center",
-      marginTop: theme.spacing(2),
-    },
-    arrowButton: {
-      margin: theme.spacing(0, 1),
-    },
-  })
-);
+import { useStyles } from "./Google-Reviews.styles";
 
 interface Review {
   author_name: string;
   rating: number;
   text: string;
-  time: string;
 }
 
 const reviews: Review[] = [
@@ -96,36 +67,41 @@ const GoogleReviewsRenderer: React.FC = () => {
   };
 
   return (
-    <div className={classes.root}>
-      <Grid container spacing={3}>
-        {reviews.length > 0 &&
-          reviews.slice(currentIndex, currentIndex + 4).map((review, index) => (
-            <Grid key={index} item xs={12} sm={3}>
-              <Card className={classes.card}>
-                <CardContent className={classes.cardContent}>
-                  <Typography variant="h6" component="h2">
-                    {review.author_name}
-                  </Typography>
-                  <Typography variant="body1" component="p">
-                    {review.text}
-                  </Typography>
-                  <Typography color="textSecondary">{`Rating: ${review.rating}/5`}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-      </Grid>
-      {reviews.length > 4 && (
-        <div className={classes.arrowsContainer}>
-          <IconButton className={classes.arrowButton} onClick={handlePrevClick}>
-            <ArrowBackIcon />
-          </IconButton>
-          <IconButton className={classes.arrowButton} onClick={handleNextClick}>
-            <ArrowForwardIcon />
-          </IconButton>
-        </div>
-      )}
-    </div>
+    <Container maxWidth="false" className={classes.container}>
+      <div className={classes.root}>
+        <Typography variant="h4" className={classes.mainTitle} gutterBottom>
+          Customer Views
+        </Typography>
+        <Grid container spacing={3}>
+          {reviews.length > 0 &&
+            reviews.slice(currentIndex, currentIndex + 4).map((review, index) => (
+              <Grid key={index} item xs={12} sm={9} md={6} lg={3}>
+                <Card className={classes.card}>
+                  <CardContent className={classes.cardContent}>
+                    <Typography variant="h6" component="h2">
+                      {review.author_name}
+                    </Typography>
+                    <Typography variant="body1" component="p">
+                      {review.text}
+                    </Typography>
+                    <Typography color="textSecondary">{`Rating: ${review.rating}/5`}</Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+        </Grid>
+        {reviews.length > 4 && (
+          <div className={classes.arrowsContainer}>
+            <IconButton className={classes.arrowButton} onClick={handlePrevClick}>
+              <ArrowBackIcon />
+            </IconButton>
+            <IconButton className={classes.arrowButton} onClick={handleNextClick}>
+              <ArrowForwardIcon />
+            </IconButton>
+          </div>
+        )}
+      </div>
+    </Container>
   );
 };
 

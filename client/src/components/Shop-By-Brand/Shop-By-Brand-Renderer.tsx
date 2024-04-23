@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Container } from "@material-ui/core";
 import BrandCardRenderer from "./Brand-Card-Renderer";
 
 // Define styles for the component
@@ -8,6 +8,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      paddingTop: 50,
+      paddingBottom: 150
     },
     media: {
       height: 300,
@@ -40,36 +42,38 @@ const ShopByBrandRenderer: React.FC = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Typography variant="h4" className={classes.mainTitle} gutterBottom>
-        Shop By Brands
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={2}>
-          <BrandCardRenderer />
-        </Grid>
+    <Container maxWidth="lg" >
+      <div className={classes.root}>
+        <Typography variant="h4" className={classes.mainTitle} gutterBottom>
+          Shop By Brands
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} md={4} lg={2}>
+            <BrandCardRenderer />
+          </Grid>
 
-        <Grid item xs={12} sm={2}>
-          <BrandCardRenderer />
-        </Grid>
+          <Grid item xs={12} sm={6} md={4} lg={2}>
+            <BrandCardRenderer />
+          </Grid>
 
-        <Grid item xs={12} sm={2}>
-          <BrandCardRenderer />
-        </Grid>
+          <Grid item xs={12} sm={6} md={4} lg={2}>
+            <BrandCardRenderer />
+          </Grid>
 
-        <Grid item xs={12} sm={2}>
-          <BrandCardRenderer />
-        </Grid>
+          <Grid item xs={12} sm={6} md={4} lg={2}>
+            <BrandCardRenderer />
+          </Grid>
 
-        <Grid item xs={12} sm={2}>
-          <BrandCardRenderer />
-        </Grid>
+          <Grid item xs={12} sm={6} md={4} lg={2}>
+            <BrandCardRenderer />
+          </Grid>
 
-        <Grid item xs={12} sm={2}>
-          <BrandCardRenderer />
+          <Grid item xs={12} sm={6} md={4} lg={2}>
+            <BrandCardRenderer />
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </Container>
   );
 };
 

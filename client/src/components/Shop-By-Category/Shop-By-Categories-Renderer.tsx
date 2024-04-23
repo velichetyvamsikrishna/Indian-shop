@@ -1,85 +1,44 @@
 import React, { useState } from "react";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Container } from "@material-ui/core";
 import CategoryCardRenderer from "./Category-Card-Renderer";
-import {  useGetProductsAPI } from "./../../api/productsAPI";
-import { useEffect } from "react";
-
-// Define styles for the component
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    media: {
-      height: 300,
-      width: "auto",
-      margin: "auto",
-    },
-    cardContent: {
-      textAlign: "left",
-    },
-    addButton: {
-      marginTop: theme.spacing(2),
-    },
-    quantityControl: {
-      display: "flex",
-      alignItems: "center",
-    },
-    quantityInput: {
-      width: 50,
-      marginRight: theme.spacing(1),
-      marginLeft: theme.spacing(1),
-    },
-    mainTitle: {
-      textAlign: "center",
-      marginBottom: theme.spacing(4),
-    },
-  })
-);
-
+import { shopByCategory } from "./Shop-By-Category.styles";
 
 const ShopByCategoriesRenderer: React.FC = () => {
-  const classes = useStyles();
-
-  const getProductsAPI = useGetProductsAPI();
-
-  useEffect(() => {
-		console.log("products "+JSON.stringify(getProductsAPI))
-	}, [getProductsAPI]);
-
+  const classes = shopByCategory();
 
   return (
-    <div className={classes.root}>
-      <Typography variant="h4" className={classes.mainTitle} gutterBottom>
-        Shop By Categories
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={2}>
-          <CategoryCardRenderer />
-        </Grid>
+    <Container maxWidth="lg" >
+      <div className={classes.root}>
+        <Typography variant="h4" className={classes.mainTitle} gutterBottom>
+          Shop By Categories
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={6} md={4} lg={2}>
+            <CategoryCardRenderer />
+          </Grid>
 
-        <Grid item xs={12} sm={2}>
-          <CategoryCardRenderer />
-        </Grid>
+          <Grid item xs={12} sm={6} md={4} lg={2}>
+            <CategoryCardRenderer />
+          </Grid>
 
-        <Grid item xs={12} sm={2}>
-          <CategoryCardRenderer />
-        </Grid>
+          <Grid item xs={12} sm={6} md={4} lg={2}>
+            <CategoryCardRenderer />
+          </Grid>
 
-        <Grid item xs={12} sm={2}>
-          <CategoryCardRenderer />
-        </Grid>
+          <Grid item xs={12} sm={6} md={4} lg={2}>
+            <CategoryCardRenderer />
+          </Grid>
 
-        <Grid item xs={12} sm={2}>
-          <CategoryCardRenderer />
-        </Grid>
+          <Grid item xs={12} sm={6} md={4} lg={2}>
+            <CategoryCardRenderer />
+          </Grid>
 
-        <Grid item xs={12} sm={2}>
-          <CategoryCardRenderer />
+          <Grid item xs={12} sm={6} md={4} lg={2}>
+            <CategoryCardRenderer />
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </Container>
   );
 };
 

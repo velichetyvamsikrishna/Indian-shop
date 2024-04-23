@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 180,
     maxHeight: 180,
     borderRadius: 13,
-    height: 160,
+    height: 180,
     width: 180,
     backgroundColor: "#F2F2F2",
   },
