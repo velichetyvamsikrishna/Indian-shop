@@ -9,7 +9,9 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1,
       paddingTop: 50,
-      paddingBottom: 150
+      paddingBottom: 150,
+      paddingLeft: 40,
+      paddingRight: 40,
     },
     media: {
       height: 300,
