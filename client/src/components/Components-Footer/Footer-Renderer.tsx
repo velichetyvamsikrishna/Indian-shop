@@ -1,20 +1,14 @@
-import React from "react";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import { Grid, Typography, Link } from "@mui/material";
+import React from 'react';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
+import { Grid, Typography, Link, Box } from '@material-ui/core';
+import { Facebook, X, Instagram, LinkedIn, YouTube } from '@mui/icons-material';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     footer: {
-      backgroundColor: "cyan",
-      padding: theme.spacing(4),
-      marginTop: "auto",
-    },
-    column: {
-      display: "flex",
-      flexDirection: "column",
-    },
-    socialMedia: {
-      marginTop: theme.spacing(2),
+      position: 'relative',
+      background: '#F5FBF5',
+      height: '100%'
     },
   })
 );
@@ -24,89 +18,113 @@ const FooterRenderer: React.FC = () => {
 
   return (
     <footer className={classes.footer}>
-      <Grid container spacing={4}>
-        {/* Column 1 */}
-        <Grid item xs={12} sm={6} md={3}>
-          <div className={classes.column}>
-            <Typography variant="h6">Column 1</Typography>
-            <Typography>Row 1</Typography>
-            <Typography>Row 2</Typography>
-            <Typography>Row 3</Typography>
-            <Typography>Row 4</Typography>
-            <Typography>Row 5</Typography>
+      <Grid container maxWidth="lg" spacing={10} justifyContent="flex-start" alignItems="flex-start" style={{ paddingLeft: 100, paddingRight: 100, paddingTop: 30, paddingBottom: 30 }}>
+        <Grid item xs={12} sm={9} md={6} lg={3}>
+          <div className={classes.column} style={{ paddingBottom: 50 }}>
+            <div style={{ width: 260, paddingBottom: 20 }}>
+              <Typography variant="h5" style={{ color: '#0D3823', fontSize: 24, fontFamily: 'Playfair Display', fontWeight: 900, textTransform: 'capitalize', wordWrap: 'break-word' }}>
+                Indian Shop<br />
+              </Typography>
+              <Typography variant="h5" style={{ color: '#FF6600', fontSize: 24, fontFamily: 'Proxima Nova', fontWeight: 400, textTransform: 'capitalize', wordWrap: 'break-word' }}>
+                Milano
+              </Typography>
+            </div>
+            <Typography>Involved in the import and distribution of asian/indian food and grocery items of all types in milan, italia ,first indian groceries shop in milan</Typography>
           </div>
+          <Box
+            style={{ width: 255, border: "1px solid #1A3F2D" }}
+          />
         </Grid>
-        {/* Column 2 */}
-        <Grid item xs={12} sm={6} md={3}>
-          <div className={classes.column}>
-            <Typography variant="h6">Column 2</Typography>
-            <Typography>Row 1</Typography>
-            <Typography>Row 2</Typography>
-            <Typography>Row 3</Typography>
-            <Typography>Row 4</Typography>
-            <Typography>Row 5</Typography>
-          </div>
+
+        <Grid item xs={12} sm={9} md={6} lg={3}>
+          <Typography style={{ fontSize: 16, fontFamily: 'Proxima Nova', paddingBottom: 20, fontWeight: 900, }}>All Categories</Typography>
+          <Typography>Row 1</Typography>
+          <Typography>Row 2</Typography>
+          <Typography>Row 3</Typography>
+          <Typography>Row 4</Typography>
+          <Typography>Row 5</Typography>
         </Grid>
-        {/* Column 3 */}
-        <Grid item xs={12} sm={6} md={3}>
-          <div className={classes.column}>
-            <Typography variant="h6">Column 3</Typography>
-            <Typography>Row 1</Typography>
-            <Typography>Row 2</Typography>
-            <Typography>Row 3</Typography>
-            <Typography>Row 4</Typography>
-            <Typography>Row 5</Typography>
-          </div>
+
+        <Grid item xs={12} sm={9} md={6} lg={3}>
+          <Typography style={{ fontSize: 16, fontFamily: 'Proxima Nova', paddingBottom: 20, fontWeight: 900, }}>Company</Typography>
+          <Typography>Row 1</Typography>
+          <Typography>Row 2</Typography>
+          <Typography>Row 3</Typography>
+          <Typography>Row 4</Typography>
+          <Typography>Row 5</Typography>
         </Grid>
-        {/* Column 4 */}
-        <Grid item xs={12} sm={6} md={3}>
-          <div className={classes.column}>
-            <Typography variant="h6">Column 4</Typography>
-            <Typography>Row 1</Typography>
-            <Typography>Row 2</Typography>
-            <Typography>Row 3</Typography>
-            <Typography>Row 4</Typography>
-            <Typography>Row 5</Typography>
-          </div>
+
+        <Grid item xs={12} sm={9} md={6} lg={3}>
+
+          <Typography style={{ fontSize: 16, fontFamily: 'Proxima Nova', paddingBottom: 20, fontWeight: 900, }}>Legal</Typography>
+          <Typography>Row 1</Typography>
+          <Typography>Row 2</Typography>
+          <Typography>Row 3</Typography>
+          <Typography>Row 4</Typography>
+          <Typography>Row 5</Typography>
+
         </Grid>
       </Grid>
       {/* Social Media Links */}
-      <div className={classes.socialMedia}>
-        <Typography variant="body2">Follow us:</Typography>
-        <Link
-          href="#"
-          variant="body2"
-          color="inherit"
-          underline="hover"
-          style={{ marginRight: "8px" }}
-        >
-          Facebook
-        </Link>
-        <Link
-          href="#"
-          variant="body2"
-          color="inherit"
-          underline="hover"
-          style={{ marginRight: "8px" }}
-        >
-          Twitter
-        </Link>
-        <Link
-          href="#"
-          variant="body2"
-          color="inherit"
-          underline="hover"
-          style={{ marginRight: "8px" }}
-        >
-          Instagram
-        </Link>
-      </div>
-      {/* Copyright */}
+      <Grid container spacing={10} justifyContent="flex-start" alignItems="flex-start" style={{ paddingLeft: 100, paddingRight: 100, paddingBottom: 50 }}>
+        <Grid item item xs={12} sm={9} md={6} lg={3}>
+          <Typography variant="body1" fontWeight="bold">
+            Follow Us:
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item>
+              <div style={{ width: 26, height: 26, }} >
+                <X />
+              </div>
+            </Grid>
+            <Grid item>
+              <div style={{ width: 26, height: 26, }} >
+                <Facebook />
+              </div>
+            </Grid>
+            <Grid item>
+              <div style={{ width: 26, height: 26, }} >
+                <Instagram />
+              </div>
+            </Grid>
+            <Grid item>
+              <div style={{ width: 26, height: 26, }} >
+                <YouTube />
+              </div>
+            </Grid>
+            <Grid item>
+              <div style={{ width: 26, height: 26, }} >
+                <LinkedIn />
+              </div>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item item xs={12} sm={9} md={6} lg={3}>
+          <Typography variant="body1" fontWeight="bold">
+            Call Us:
+          </Typography>
+          <Typography variant="body1">+39 02 8965 6178</Typography>
+        </Grid>
+        <Grid item item xs={12} sm={9} md={6} lg={3}>
+          <Typography variant="body1" fontWeight="bold">
+            Write Us:
+          </Typography>
+          <Typography variant="body1">Business@Email.com</Typography>
+        </Grid>
+        <Grid item item xs={12} sm={9} md={6} lg={3}>
+          <Typography variant="body1" fontWeight="bold">
+            Address:
+          </Typography>
+          <Typography variant="body1">
+            Via Panfilo Castaldi, 32, 20124 Milano MI, Italy
+          </Typography>
+        </Grid>
+      </Grid>
       <Typography
         variant="body2"
         color="inherit"
         align="center"
-        style={{ marginTop: "16px" }}
+        style={{ paddingTop: "16px", height: 38, background: '#438866', textAlign: 'center', color: 'white', fontSize: 14, fontFamily: 'Proxima Nova', fontWeight: '500', wordWrap: 'break-word' }}
       >
         &copy; {new Date().getFullYear()} Your Company Name. All rights
         reserved.
