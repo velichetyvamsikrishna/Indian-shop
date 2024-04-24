@@ -4,7 +4,9 @@ export const shopByCategory = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             flexGrow: 1,
-            paddingTop: 50
+            paddingTop: 50,
+            paddingLeft: 40,
+            paddingRight: 40,
         },
         media: {
             height: 300,
