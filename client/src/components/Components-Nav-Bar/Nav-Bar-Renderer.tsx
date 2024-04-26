@@ -1,28 +1,92 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  InputBase,
-  Button,
-} from "@mui/material";
-import Link, { LinkProps } from "@material-ui/core/Link";
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { AppBar, Toolbar, Typography, IconButton, InputBase, Divider, Button } from '@material-ui/core';
+import { ShoppingCart, ArrowDropDown } from '@mui/icons-material';
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import LocationSearchRenderer from "./Location-Search-Renderer";
 import CartDrawerRenderer from "../Components-Cart/Cart-Drawer-Renderer";
-//import home, login from "../../main/index"
 
-interface INavBarRenderer {
-  currentUserLocation: string;
-}
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  appBar: {
+    background: 'white',
+    paddingLeft: 100,
+    paddingRight: 100,
+    paddingTop: 10,
+  },
+  logo: {
+    flexGrow: 1,
+    fontFamily: 'Playfair Display',
+    fontWeight: 900,
+    fontSize: 22,
+    color: '#0D3823',
+    textTransform: 'capitalize',
+    marginLeft: theme.spacing(2), // Add margin left for logo
+  },
+  menuContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  locationContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    width: 200,
+  },
+  menuItem: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(1, 2),
+    color: '#323232',
+    fontFamily: 'Proxima Nova',
+    fontWeight: 500,
+    fontSize: 14,
+    lineHeight: '24px',
+    textTransform: 'capitalize'
+  },
+  searchContainer: {
+    position: 'relative',
+    backgroundColor: '#F2F2F2',
+    borderRadius: 6,
+    width: 432,
+    marginRight: theme.spacing(2)
+  },
+  searchInput: {
+    marginLeft: theme.spacing(2),
+    flex: 1,
+    color: '#909592',
+    fontFamily: 'Proxima Nova',
+    fontWeight: 400,
+    fontSize: 14,
+    lineHeight: '24px',
+    '&::placeholder': {
+      color: '#909592'
+    }
+  },
+  searchIcon: {
+    position: 'absolute',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#909592',
+    width: 14.35,
+    height: 14.35,
+    right: 10,
+    top: '50%',
+    transform: 'translateY(-50%)'
+  },
+  cartIcon: {
+    marginLeft: theme.spacing(2),
+    color: '#0D3823'
+  }
+}));
 
-const NavBarRenderer: React.FC<INavBarRenderer> = ({ currentUserLocation }) => {
+const NavbarRenderer = () => {
+  const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
- const navigate = useNavigate();
+
   const handleCartClose = () => {
     setIsCartOpen(false);
   };
@@ -34,71 +98,72 @@ const NavBarRenderer: React.FC<INavBarRenderer> = ({ currentUserLocation }) => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const AdapterLink = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => (
-    
-    <Link innerRef={ref as any} {...props} />
-  ));
+
   return (
-    <AppBar
-      position="static"
-      sx={{ background: "transparent", borderTop: "1px solid #00000045" }}
-    >
-      <Toolbar>
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{ flexGrow: 1, color: "black" }}
-        >
-          Indian Shop Milano
-        </Typography>
-        <LocationSearchRenderer />
-        <div style={{ flexGrow: 1 }}>
-          <IconButton size="large">
-            <SearchIcon />
-          </IconButton>
-          <InputBase
-            placeholder="Search..."
-            inputProps={{ "aria-label": "search" }}
-            sx={{ color: "inherit" }}
+    <div className={classes.root}>
+      <AppBar position="static" className={classes.appBar}>
+        <Toolbar>
+          <div style={{ width: 151, height: 44, background: '#F2F2F2', alignContent: 'center', marginLeft: 14 }}>
+            <Typography variant="h1" className={classes.logo}>
+              Indian Shop
+            </Typography>
+          </div>
+          <div className={classes.locationContainer}>
+            <div className={classes.menuItem}>New York</div>
+            <ArrowDropDown style={{ color: '#FF6600' }} />
+          </div>
+          <Divider
+            orientation="vertical"
+            style={{
+              width: 0,
+              height: 44,
+              marginRight: 20,
+              marginLeft: 20,
+              transformOrigin: '0 0',
+              border: '1px rgba(0, 0, 0, 0.27) solid'
+            }}
           />
-        </div>
-        <Button href="/login"  sx={{ textTransform: "none", marginRight: 1 }} >
-          Login
-        </Button>
-        <Button href="/signup" sx={{ textTransform: "none", marginRight: 1 }}>
-          Register
-        </Button>
-        <IconButton
-          aria-label="cart"
-          aria-controls="simple-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-          color="inherit"
-        >
-          <ShoppingCartIcon sx={{ color: "black" }} onClick={handleCartClick} />
-          <CartDrawerRenderer isOpen={isCartOpen} onClose={handleCartClose} />
-        </IconButton>
-      </Toolbar>
-      <Toolbar>
-        {/* Actionable nav items */}
-        <Button href="/login"  sx={{ textTransform: "none", marginRight: 1 }}>
-          Rice Products
-        </Button>
-        <Button href="/signup" sx={{ textTransform: "none", marginRight: 1 }}>
-         Flour Products
-        </Button>
-        <Button href="/" component={AdapterLink} sx={{ textTransform: "none", marginRight: 1 }}>
-          Pulses and Spices
-        </Button>
-        <Button href="/" component={AdapterLink} sx={{ textTransform: "none", marginRight: 1 }}>
-          Bevarages
-        </Button>
-        <Button href="/" component={AdapterLink} sx={{ textTransform: "none" }}>
-          Oil and Ghee
-        </Button>
-      </Toolbar>
-    </AppBar>
+          <div className={classes.searchContainer}>
+            <InputBase
+              placeholder="Search everything at our store"
+              className={classes.searchInput}
+            />
+            <div className={classes.searchIcon}>
+              <SearchIcon style={{ width: 24.35, height: 24.35 }} />
+            </div>
+          </div>
+          <Button to="/login" style={{ marginLeft: "auto" }} className={classes.menuItem}>
+            Login
+          </Button>
+          <Button to="/register" className={classes.menuItem}>
+            Register
+          </Button>
+          <IconButton
+            aria-label="cart"
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+            color="inherit"
+          >
+            <ShoppingCartIcon style={{ color: '#0D3823' }} onClick={handleCartClick} />
+            <CartDrawerRenderer isOpen={isCartOpen} onClose={handleCartClose} />
+          </IconButton>
+        </Toolbar>
+        <Toolbar>
+          <div className={classes.menuContainer}>
+            <div className={classes.menuItem}>Rice Products</div>
+            <div className={classes.menuItem}>Flour Products</div>
+            <div className={classes.menuItem}>Pulses and Spices</div>
+            <div className={classes.menuItem}>Beverages</div>
+            <div className={classes.menuItem}>Oil and Ghee</div>
+            <div className={classes.menuItem}>Household</div>
+            <div className={classes.menuItem}>Deal of the Day</div>
+            <div className={classes.menuItem}>Discounts</div>
+          </div>
+        </Toolbar>
+      </AppBar>
+    </div>
   );
 };
 
-export default NavBarRenderer;
+export default NavbarRenderer;

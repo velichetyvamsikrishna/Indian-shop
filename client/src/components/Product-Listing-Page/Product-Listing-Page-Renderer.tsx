@@ -5,15 +5,14 @@ import {
   Typography,
   Divider,
   Grid,
-  TextField,
   FormControl,
-  InputLabel,
+  InputBase,
   Select,
   MenuItem,
 } from "@material-ui/core";
-// import ProductCard from "./ProductCard"; // Assuming ProductCard is a separate component for displaying product details
 import SortIcon from "@material-ui/icons/Sort";
 import GroceryItemCardRenderer from "../Grocery-Item-Card/Grocery-Item-Card-Renderer";
+import SearchIcon from "@mui/icons-material/Search";
 
 const products = [
   // Sample product data
@@ -37,16 +36,25 @@ const ProductListingPageRenderer: React.FC = () => {
   return (
     <Container maxWidth="lg" className={classes.container}>
       <div className={classes.header}>
-        <Typography variant="h4" className={classes.title}>
-          Grocery Products
-        </Typography>
+        <div className={classes.available} >
+          <Typography className={classes.title}>
+            Grocery Products
+          </Typography>
+          <Typography variant="body2">
+            <span>246 available</span>
+          </Typography>
+        </div>
         <div className={classes.controls}>
-          <TextField
-            variant="outlined"
-            placeholder="Search..."
-            className={classes.searchBox}
-          />
-          <FormControl variant="outlined" className={classes.sortByDropdown}>
+          <div className={classes.searchContainer}>
+            <InputBase
+              placeholder="What are your looking for"
+              className={classes.searchInput}
+            />
+            <div className={classes.searchIcon}>
+              <SearchIcon style={{ width: 18, height: 18 }} />
+            </div>
+          </div>
+          <FormControl variant="outlined" >
             <Select
               labelId="sort-by-label"
               value=""
@@ -80,6 +88,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       marginTop: theme.spacing(4),
+      marginBottom: theme.spacing(20)
     },
     header: {
       display: "flex",
@@ -88,26 +97,68 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       flexGrow: 1,
+      width: 737,
+      color: '#0D3823',
+      fontSize: 24,
+      fontFamily: 'Proxima Nova',
+      fontWeight: 800,
+      wordWrap: 'break-word',
+      marginBottom: theme.spacing(1)
     },
     controls: {
       display: "flex",
       alignItems: "center",
+      marginLeft: "auto"
     },
     searchBox: {
-      marginRight: theme.spacing(2),
-      width: "300px",
+      height: 35,
+      marginRight: theme.spacing(1),
     },
-    sortByDropdown: {
-      minWidth: "150px",
+    searchContainer: {
+      position: 'relative',
+      backgroundColor: '#FFF',
+      borderRadius: 6,
+      width: 252,
+      height: 35,
+      marginRight: theme.spacing(2),
+      border: "1px solid grey"
+    },
+    searchInput: {
+      marginLeft: theme.spacing(2),
+      flex: 1,
+      color: '#909592',
+      fontFamily: 'Proxima Nova',
+      fontWeight: 400,
+      fontSize: 16,
+      lineHeight: '24px',
+      '&::placeholder': {
+        color: '#909592'
+      }
+    },
+    searchIcon: {
+      position: 'absolute',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#909592',
+      width: 14.35,
+      height: 14.35,
+      right: 10,
+      top: '50%',
+      transform: 'translateY(-50%)'
     },
     selectEmpty: {
-      padding: theme.spacing(1),
+      height: 35, // Adjust the height as needed
+      minWidth: 120, // Add any additional styling here
     },
     divider: {
       height: "2px",
       width: "100%",
       backgroundColor: theme.palette.primary.main,
       marginBottom: theme.spacing(2),
+    },
+    available: {
+      display: 'block', // Ensure the text appears on a separate line
     },
   })
 );
