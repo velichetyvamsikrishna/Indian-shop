@@ -30,7 +30,7 @@ const KitchenHomeSupplyRenderer: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="false" >
+    <Container  >
       <div className={classes.root}>
         <Typography variant="h4" className={classes.mainTitle}>
           Kitchen & Home Supply

@@ -132,12 +132,12 @@ const NavbarRenderer = () => {
               <SearchIcon style={{ width: 24.35, height: 24.35 }} />
             </div>
           </div>
-          <Button to="/login" style={{ marginLeft: "auto" }} className={classes.menuItem}>
+          {/* <Button to="/login" style={{ marginLeft: "auto" }} className={classes.menuItem}>
             Login
           </Button>
           <Button to="/register" className={classes.menuItem}>
             Register
-          </Button>
+          </Button> */}
           <IconButton
             aria-label="cart"
             aria-controls="simple-menu"

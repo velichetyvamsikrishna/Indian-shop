@@ -15,6 +15,7 @@ interface Review {
   author_name: string;
   rating: number;
   text: string;
+  time:string
 }
 
 const reviews: Review[] = [
@@ -67,7 +68,7 @@ const GoogleReviewsRenderer: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="false" className={classes.container}>
+    <Container className={classes.container}>
       <div className={classes.root}>
         <Typography variant="h4" className={classes.mainTitle} gutterBottom>
           Customer Views

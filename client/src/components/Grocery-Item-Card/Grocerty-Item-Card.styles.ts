@@ -1,6 +1,7 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material";
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles((theme:Theme) => createStyles({
     root: {
         width: 282,
         height: 374,
@@ -67,7 +68,7 @@ export const useStyles = makeStyles((theme) => ({
         color: 'white',
         fontSize: 10,
         fontFamily: 'Proxima Nova',
-        fontWeight: '800',
+        fontWeight: 800,
         wordWrap: 'break-word',
     },
     title: {
@@ -79,7 +80,7 @@ export const useStyles = makeStyles((theme) => ({
         color: '#0D3823',
         fontSize: 16,
         fontFamily: 'Proxima Nova',
-        fontWeight: '400',
+        fontWeight: 400,
         wordWrap: 'break-word',
     },
     price: {
@@ -90,7 +91,7 @@ export const useStyles = makeStyles((theme) => ({
         color: '#585858',
         fontSize: 12,
         fontFamily: 'Proxima Nova',
-        fontWeight: '400',
+        fontWeight: 400,
         letterSpacing: 1.2,
         wordWrap: 'break-word',
     },
@@ -104,14 +105,14 @@ export const useStyles = makeStyles((theme) => ({
         color: '#0D3823',
         fontSize: 16,
         fontFamily: 'Proxima Nova',
-        fontWeight: '700',
+        fontWeight: 700,
         wordWrap: 'break-word',
     },
     originalPrice: {
         color: '#909592',
         fontSize: 16,
         fontFamily: 'Proxima Nova',
-        fontWeight: '400',
+        fontWeight: 400,
         wordWrap: 'break-word',
     },
     actionButtonsContainer: {
@@ -139,7 +140,7 @@ export const useStyles = makeStyles((theme) => ({
         color: '#323232',
         fontSize: 18,
         fontFamily: 'Proxima Nova',
-        fontWeight: '600',
+        fontWeight: 600,
         wordWrap: 'break-word',
     },
     quantityInput: {
@@ -163,7 +164,7 @@ export const useStyles = makeStyles((theme) => ({
         color: '#FF6600',
         fontSize: 18,
         fontFamily: 'Proxima Nova',
-        fontWeight: '700',
+        fontWeight: 700,
         wordWrap: 'break-word',
     },
     // New styles for Card integration
@@ -177,13 +178,13 @@ export const useStyles = makeStyles((theme) => ({
         color: '#0D3823',
         fontSize: 16,
         fontFamily: 'Proxima Nova',
-        fontWeight: '400',
+        fontWeight: 400,
         wordWrap: 'break-word',
     },
     categoryTitle: {
         fontSize: 16,
         fontFamily: 'Proxima Nova',
-        fontWeight: '400',
+        fontWeight: 400,
         wordWrap: 'break-word',
     },
     cardItemIcons: {

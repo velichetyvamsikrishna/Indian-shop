@@ -19,7 +19,7 @@ import ProductListingPageRenderer from "./components/Product-Listing-Page/Produc
     return(
         <>
       
-        <NavBarRenderer currentUserLocation={"Delhi, India"} />
+        <NavBarRenderer  />
         <br />
         <BannerRenderer />
         <br />

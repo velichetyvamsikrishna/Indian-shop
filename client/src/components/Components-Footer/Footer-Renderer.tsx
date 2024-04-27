@@ -18,9 +18,9 @@ const FooterRenderer: React.FC = () => {
 
   return (
     <footer className={classes.footer}>
-      <Grid container maxWidth="lg" spacing={10} justifyContent="flex-start" alignItems="flex-start" style={{ paddingLeft: 100, paddingRight: 100, paddingTop: 30, paddingBottom: 30 }}>
+      <Grid container  spacing={10} justifyContent="flex-start" alignItems="flex-start" style={{ paddingLeft: 100, paddingRight: 100, paddingTop: 30, paddingBottom: 30 }}>
         <Grid item xs={12} sm={9} md={6} lg={3}>
-          <div className={classes.column} style={{ paddingBottom: 50 }}>
+          <div  style={{ paddingBottom: 50 }}>
             <div style={{ width: 260, paddingBottom: 20 }}>
               <Typography variant="h5" style={{ color: '#0D3823', fontSize: 24, fontFamily: 'Playfair Display', fontWeight: 900, textTransform: 'capitalize', wordWrap: 'break-word' }}>
                 Indian Shop<br />
@@ -67,8 +67,8 @@ const FooterRenderer: React.FC = () => {
       </Grid>
       {/* Social Media Links */}
       <Grid container spacing={10} justifyContent="flex-start" alignItems="flex-start" style={{ paddingLeft: 100, paddingRight: 100, paddingBottom: 50 }}>
-        <Grid item item xs={12} sm={9} md={6} lg={3}>
-          <Typography variant="body1" fontWeight="bold">
+        <Grid item xs={12} sm={9} md={6} lg={3}>
+          <Typography  variant="body1" >
             Follow Us:
           </Typography>
           <Grid container spacing={2}>
@@ -99,20 +99,20 @@ const FooterRenderer: React.FC = () => {
             </Grid>
           </Grid>
         </Grid>
-        <Grid item item xs={12} sm={9} md={6} lg={3}>
-          <Typography variant="body1" fontWeight="bold">
+        <Grid item  xs={12} sm={9} md={6} lg={3}>
+          <Typography >
             Call Us:
           </Typography>
           <Typography variant="body1">+39 02 8965 6178</Typography>
         </Grid>
-        <Grid item item xs={12} sm={9} md={6} lg={3}>
-          <Typography variant="body1" fontWeight="bold">
+        <Grid item  xs={12} sm={9} md={6} lg={3}>
+          <Typography>
             Write Us:
           </Typography>
           <Typography variant="body1">Business@Email.com</Typography>
         </Grid>
-        <Grid item item xs={12} sm={9} md={6} lg={3}>
-          <Typography variant="body1" fontWeight="bold">
+        <Grid item  xs={12} sm={9} md={6} lg={3}>
+          <Typography variant="body1" >
             Address:
           </Typography>
           <Typography variant="body1">
