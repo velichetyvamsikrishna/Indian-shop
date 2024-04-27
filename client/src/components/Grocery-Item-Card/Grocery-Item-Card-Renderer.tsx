@@ -14,7 +14,7 @@ const GroceryItemCardRenderer: React.FC = () => {
     originalPrice: 120,
   };
   const image = "https://via.placeholder.com/216x216";
-  const classes = useStyles();
+  const classes:any = useStyles();
 
   return (
     <Card className={classes.cardStyles}>
