@@ -13,45 +13,33 @@ import BannerRenderer from "./components/Components-Banner/Banner-Renderer";
 import GroceryItemForm from "./components/Components-Grocery-Item/Grocery-Item-Form";
 import ProductListingPageRenderer from "./components/Product-Listing-Page/Product-Listing-Page-Renderer";
 
- export default function App () {
+export default function App() {
 
 
-    return(
-        <>
-      
-        <NavBarRenderer  />
-        <br />
-        <BannerRenderer />
-        <br />
-        <ShopByCategoriesRenderer />
-        <br />
-        <BestSellersRenderer />
-        <br />
-        <br />
-        <GoogleReviewsRenderer />
-        <br />
-        <KitchenHomeSupplyRenderer />
-        <br />
-        <ShopByBrandRenderer />
-        <br />
-        <FooterRenderer />
-        <br />
-        <ProductDetailsRenderer
-          name={"Product Name"}
-          description={"Product Description"}
-          images={[
-            "https://i5.walmartimages.com/asr/90cdb9fd-c2d6-4f10-90c4-bbc16c6963a2.8590ae0e3e7ab073316455a9dd9cfd87.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
-            "https://i5.walmartimages.com/asr/90cdb9fd-c2d6-4f10-90c4-bbc16c6963a2.8590ae0e3e7ab073316455a9dd9cfd87.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
-            "https://i5.walmartimages.com/asr/90cdb9fd-c2d6-4f10-90c4-bbc16c6963a2.8590ae0e3e7ab073316455a9dd9cfd87.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
-          ]}
-          price={10.99}
-        />
+  return (
+    <>
 
-        <br />
- <GroceryItemForm />
-        <br />
-        <ProductListingPageRenderer />
-       
-      </>
-    )
+      <NavBarRenderer />
+      <BannerRenderer />
+      <ShopByCategoriesRenderer />
+      <BestSellersRenderer />
+      <GoogleReviewsRenderer />
+      <KitchenHomeSupplyRenderer />
+      <ShopByBrandRenderer />
+      <FooterRenderer />
+      {/* <ProductDetailsRenderer
+        name={"Product Name"}
+        description={"Product Description"}
+        images={[
+          "https://i5.walmartimages.com/asr/90cdb9fd-c2d6-4f10-90c4-bbc16c6963a2.8590ae0e3e7ab073316455a9dd9cfd87.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
+          "https://i5.walmartimages.com/asr/90cdb9fd-c2d6-4f10-90c4-bbc16c6963a2.8590ae0e3e7ab073316455a9dd9cfd87.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
+          "https://i5.walmartimages.com/asr/90cdb9fd-c2d6-4f10-90c4-bbc16c6963a2.8590ae0e3e7ab073316455a9dd9cfd87.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
+        ]}
+        price={10.99}
+      /> */}
+      {/* <GroceryItemForm /> */}
+      {/* <ProductListingPageRenderer /> */}
+
+    </>
+  )
 }
