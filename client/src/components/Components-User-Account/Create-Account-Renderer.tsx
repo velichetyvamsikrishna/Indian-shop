@@ -93,6 +93,8 @@ const SignUp: React.FC = () => {
               <Grid item xs={12} style={{ padding: 20 }}>
                 <FormControlLabel
                   control={<Checkbox />}
+                  label=""
+
                 />
                 <span className={classes.text}>By clicking on checkbox, you agree to our </span>
                 <span className={classes.link}>Privacy Policy</span>
