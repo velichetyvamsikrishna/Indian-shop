@@ -1,40 +1,15 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { FormControlLabel, InputBase, Checkbox, Typography, Container, Box, Button, Link, Grid, Avatar } from "@mui/material";
+import { useStyles } from './form.styles';
 
-const Copyright = (props: any) => {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-};
-
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 const SignUp: React.FC = () => {
+  const classes = useStyles();
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -46,100 +21,107 @@ const SignUp: React.FC = () => {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
+      <Container style={{ paddingBottom: 100 }} component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            mt: 2
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, background: "#FF6600" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Register
           </Typography>
           <Box
             component="form"
             noValidate
             onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+            sx={{ mt: 4 }}
           >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
+                <InputBase
                   autoComplete="given-name"
                   name="firstName"
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  placeholder="First Name"
+                  className={classes.inputElements}
                   autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
+                <InputBase
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  placeholder="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  className={classes.inputElements}
                 />
               </Grid>
-              <Grid item xs={12}>
-                <TextField
+              <Grid item xs={12} spacing={4}>
+                <InputBase
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  placeholder="Email Address"
                   name="email"
                   autoComplete="email"
+                  className={classes.inputElements}
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <InputBase
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  placeholder="Password"
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  className={classes.inputElements}
                 />
+              </Grid>
+              <Grid item xs={12} style={{ padding: 20 }}>
+                <FormControlLabel
+                  control={<Checkbox />}
+                />
+                <span className={classes.text}>By clicking on checkbox, you agree to our </span>
+                <span className={classes.link}>Privacy Policy</span>
+                <span className={classes.text}> and</span>
+                <span className={classes.link}> Terms & Conditions.</span>
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  sx={{ mt: 3, mb: 2 }}
+                  className={classes.submitButton}
+                >
+                  Register
+                </Button>
+              </Grid>
+              <Grid item xs={12} justifyContent="flex-start">
+                <Grid item>
+                  <Link href="#" variant="body2">
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
+
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 };
 
