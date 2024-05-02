@@ -23,6 +23,8 @@ const getProductCategories=async(options={})=>{
         uniquecategoryObjects.push({CAT_ID:id,CAT_NAME:name});
         }
     }
+     uniquecategoryObjects=[{"CAT_ID":1,"CAT_NAME":"Rice Products"},{"CAT_ID":2,"CAT_NAME":"Flour Products"},{"CAT_ID":3,"CAT_NAME":"Pulses and Spices"},{"CAT_ID":4,"CAT_NAME":"Beverages"},{"CAT_ID":5,"CAT_NAME":"Oil and Ghee"},{"CAT_ID":6,"CAT_NAME":"Household"},{"CAT_ID":7,"CAT_NAME":"Deal of the Day"},{"CAT_ID":8,"CAT_NAME":"Discounts"}]
+    
     return uniquecategoryObjects;
 }
 
