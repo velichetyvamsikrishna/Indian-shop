@@ -5,7 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { categoryCard } from "./Shop-By-Category.styles";
 
-const CategoryCardRenderer = () => {
+const CategoryCardRenderer = (data:any) => {
   const classes = categoryCard();
   return (
     <Card className={classes.cardStyles}>
@@ -16,7 +16,7 @@ const CategoryCardRenderer = () => {
         alt="green iguana"
       />
       <CardContent className={classes.categoryTitleArea}>
-        <Typography className={classes.categoryTitle}>Lizards</Typography>
+        <Typography className={classes.categoryTitle}>{data.data.CAT_NAME}</Typography>
       </CardContent>
     </Card>
   );

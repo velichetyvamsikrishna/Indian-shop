@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, IconButton, InputBase, Divider, Button } from '@material-ui/core';
 import { ShoppingCart, ArrowDropDown } from '@mui/icons-material';
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CartDrawerRenderer from "../Components-Cart/Cart-Drawer-Renderer";
+import { useGetAllCategoriesAPI } from "./../../api/productsAPI";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,11 +88,18 @@ const NavbarRenderer = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
-
+  const [categories, setCategories] = useState<any[]>([]);
+  useEffect(() => {
+    fetchCategories();
+  }, []);
   const handleCartClose = () => {
     setIsCartOpen(false);
   };
-
+  const fetchCategories = async () => {
+    const response = await useGetAllCategoriesAPI();
+    const data = await response.data;
+    setCategories(data?.categories);
+  };
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
   };
@@ -151,14 +160,20 @@ const NavbarRenderer = () => {
         </Toolbar>
         <Toolbar>
           <div className={classes.menuContainer}>
-            <div className={classes.menuItem}>Rice Products</div>
+            {categories.map((x) => {
+              return (
+                <div className={classes.menuItem}>{x.CAT_NAME}</div>
+              );
+            })}
+
+            {/* <div className={classes.menuItem}>Rice Products</div>
             <div className={classes.menuItem}>Flour Products</div>
             <div className={classes.menuItem}>Pulses and Spices</div>
             <div className={classes.menuItem}>Beverages</div>
             <div className={classes.menuItem}>Oil and Ghee</div>
             <div className={classes.menuItem}>Household</div>
             <div className={classes.menuItem}>Deal of the Day</div>
-            <div className={classes.menuItem}>Discounts</div>
+            <div className={classes.menuItem}>Discounts</div> */}
           </div>
         </Toolbar>
       </AppBar>
