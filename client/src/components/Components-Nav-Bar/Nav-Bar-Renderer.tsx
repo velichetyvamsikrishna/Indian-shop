@@ -5,7 +5,8 @@ import { ShoppingCart, ArrowDropDown } from '@mui/icons-material';
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CartDrawerRenderer from "../Components-Cart/Cart-Drawer-Renderer";
-import { useGetAllCategoriesAPI } from "./../../api/productsAPI";
+import { useGetAllCategoriesAPI, useCategoriesAPI } from "./../../api/productsAPI";
+import { Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -96,9 +97,9 @@ const NavbarRenderer = () => {
     setIsCartOpen(false);
   };
   const fetchCategories = async () => {
-    const response = await useGetAllCategoriesAPI();
-    const data = await response.data;
-    setCategories(data?.categories);
+    const data = await useCategoriesAPI();
+    
+    setCategories(data);
   };
   const handleCartClick = () => {
     setIsCartOpen(!isCartOpen);
@@ -162,7 +163,9 @@ const NavbarRenderer = () => {
           <div className={classes.menuContainer}>
             {categories.map((x) => {
               return (
-                <div className={classes.menuItem}>{x.CAT_NAME}</div>
+                <div className={classes.menuItem}>
+                 <Link to={`/productList/category/${x.CAT_ID}`}> {x.CAT_NAME} </Link>
+                  </div>
               );
             })}
 

@@ -1,6 +1,6 @@
 const express = require("express");
 const { getBestSellers, getProductCategories, getProducts } =require("../DB/ProductsModule/productsDB.js");
-const  {processAddProduct, processUpdate, processDelete}  =require( "../DB/ProductsModule/productsMiddleware.js");
+const  {processAddProduct, processUpdate, processDelete, processGetProductsRequest, processGetCategoriesRequest}  =require( "../DB/ProductsModule/productsMiddleware.js");
 
 const router = express.Router();
 
@@ -81,5 +81,20 @@ router.post("/delete",processDelete,(req,res)=>{
   res.end();
 })
 //getCategories: {id,name}, getBestSellers: , getProductsByCategoryId, getProductByProductId, getProducts : addProduct, editProduct, deleteProduct,
-
+//post requests
+//=>/products/getproducts=>{filterType:string (all,bestSellers,byCategoryId,byProductId),filterValue:string,sortby:{fieldName:'asc' || 'desc'},limit:{from:,to}}
+router.post("/getproducts",processGetProductsRequest,(req,res)=>{
+  const products=req.products;
+  if(products.length>0)
+    res.status(200).json({'status':'success',products:products});
+  else res.status(404).json({'status':'fail',products:[]});
+})
+//=>/products/categories => {sort:asc/desc}
+router.post("/getcategories",processGetCategoriesRequest,(req,res)=>{
+  const categories=req.categories || [];
+  if(categories.length>0)
+    res.status(200).json({'status':'success',categories:categories});
+  else res.status(404).json({'status':'fail',categories:[]});
+  res.end();
+})
 module.exports = router;

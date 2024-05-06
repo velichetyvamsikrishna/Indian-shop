@@ -1,4 +1,7 @@
+const mongoose=require('mongoose');
 const productModel =require("./productsModel.js");
+const products=require("../../mockdata/products.json")
+const {getDetails}=require("../../images/base64Images.js");
 
 const getProducts=async(filterObject,options={})=>{
     //Dep: productModel
@@ -7,11 +10,11 @@ const getProducts=async(filterObject,options={})=>{
     if(options.limit) query.limit(options.limit);
     return await query.exec();
   }
-
 const getProductCategories=async(options={})=>{
     //Dep: productModel
-    const query=productModel.find({},"CAT_ID CAT_NAME");
+    const query=productModel.find({},"CAT_ID CAT_NAME PROD_IMG");
     if(options.sort) query.sort(options.sort);
+    if(options.limit) query.limit(options.limit);
     const result=await query.exec();
     var uniquecategoryObjects=[]
     const uniqueCategoryIds=[];
@@ -19,20 +22,16 @@ const getProductCategories=async(options={})=>{
         const id=categoryObject.CAT_ID;
         const name=categoryObject.CAT_NAME;
         if(uniqueCategoryIds.indexOf(id)===-1){
-        uniqueCategoryIds.push(id);
-        uniquecategoryObjects.push({CAT_ID:id,CAT_NAME:name});
+            uniqueCategoryIds.push(id);
+            uniquecategoryObjects.push({CAT_ID:id,CAT_NAME:name,PROD_IMG:categoryObject.PROD_IMG});
         }
     }
-     uniquecategoryObjects=[{"CAT_ID":1,"CAT_NAME":"Rice Products"},{"CAT_ID":2,"CAT_NAME":"Flour Products"},{"CAT_ID":3,"CAT_NAME":"Pulses and Spices"},{"CAT_ID":4,"CAT_NAME":"Beverages"},{"CAT_ID":5,"CAT_NAME":"Oil and Ghee"},{"CAT_ID":6,"CAT_NAME":"Household"},{"CAT_ID":7,"CAT_NAME":"Deal of the Day"},{"CAT_ID":8,"CAT_NAME":"Discounts"}]
-    
     return uniquecategoryObjects;
 }
-
 const getBestSellers=async ()=>{
-    //Dep: productModel
+    //Dep: productModel, getProducts
     return await productModel.find({Labels:"Bestsellers"});
 }
-
 const insertProduct=async (productObject)=>{
     //Dep: productModel
     try{
@@ -41,6 +40,39 @@ const insertProduct=async (productObject)=>{
     }catch (e){
         console.log(e);
         return {status:"fail",error:e}
+    }
+}
+const pushProducts=async (limit=1)=>{
+    let count=1;
+    let i=0;
+    while (count<=limit){
+        const thisProduct=products.Inventory[i];
+        let thisCatId=thisProduct.CAT_ID;
+        while(thisCatId>8){
+            thisCatId=thisCatId-8;
+        }
+        thisProduct.CAT_ID=thisCatId;
+        count++;
+        let details=getDetails(thisProduct.CAT_ID);
+        thisProduct.CAT_NAME=details.CAT_NAME;
+        thisProduct.PROD_IMG=details.base64Image;
+        console.log(count-1)
+        console.log(await insertProduct(thisProduct));
+
+        
+        i++;
+    }
+}
+function mongoosePush(){
+    const connectString="mongodb+srv://krishnaraodemudamma:cVKRP58Co5WPp8LS@shoppingapp.kjexwsq.mongodb.net/shopping-app?retryWrites=true&w=majority&appName=ShoppingApp";
+    try {
+        mongoose.connect(connectString).then(() => {
+            console.log(" Mongoose is connected");
+            pushProducts(50);
+        });
+    } catch (e) {
+        console.log("could not connect");
+        console.log(e);
     }
 }
 const updateProduct=async (productId, modifyObject)=>{

@@ -12,7 +12,7 @@ const CategoryCardRenderer = (data:any) => {
       <CardMedia
         component="img"
         className={classes.imageStyles}
-        image="https://i5.walmartimages.com/asr/90cdb9fd-c2d6-4f10-90c4-bbc16c6963a2.8590ae0e3e7ab073316455a9dd9cfd87.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"
+        image={data.data.PROD_IMG}
         alt="green iguana"
       />
       <CardContent className={classes.categoryTitleArea}>

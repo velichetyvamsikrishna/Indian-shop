@@ -12,6 +12,7 @@ import { SignUp, SignInRenderer } from "./components/Components-User-Account";
 import BannerRenderer from "./components/Components-Banner/Banner-Renderer";
 import GroceryItemForm from "./components/Components-Grocery-Item/Grocery-Item-Form";
 import ProductListingPageRenderer from "./components/Product-Listing-Page/Product-Listing-Page-Renderer";
+import { Link } from "react-router-dom";
 
 export default function App() {
 
@@ -27,6 +28,7 @@ export default function App() {
       <KitchenHomeSupplyRenderer />
       <ShopByBrandRenderer />
       <FooterRenderer />
+      
       {/* <ProductDetailsRenderer
         name={"Product Name"}
         description={"Product Description"}
