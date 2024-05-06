@@ -21,7 +21,7 @@ const columns = [
     { id: 'actions', label: 'Actions' },
 ];
 
-const createData = (image, productId, productName, category, dateAdded, price, actions) => {
+const createData = (image: string, productId: string, productName: string, category: string, dateAdded: string, price: string, actions: string) => {
     return { image, productId, productName, category, dateAdded, price, actions };
 };
 
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
             height: 60,
             background: '#F5FBF5',
             fontSize: 16,
-            fontWeight: '600',
+            fontWeight: 600,
         },
         tableRow: {
             height: 76,
