@@ -1,108 +1,134 @@
-import React, { useState } from "react";
-import {
-  Card,
-  CardContent,
-  Typography,
-  IconButton,
-  Grid,
-  Container
-} from "@material-ui/core";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import { useStyles } from "./Google-Reviews.styles";
+const mockReviews = [
+  {
+    author_name: 'John Doe',
+    profile_photo_url: 'https://via.placeholder.com/150',
+    text: 'Great service!',
+    rating: 5,
+  },
+  {
+    author_name: 'Jane Smith',
+    profile_photo_url: 'https://via.placeholder.com/150',
+    text: ' Very satisfied. Very satisfied. Very satisfied. Very satisfied. Very satisfied. Very satisfied. Very satisfied. Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied. Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.',
+    rating: 4,
+  },
+  {
+    author_name: 'Bob Johnson',
+    profile_photo_url: 'https://via.placeholder.com/150',
+    text: 'Could be better.',
+    rating: 3,
+  },
+  {
+    author_name: 'Alice Williams',
+    profile_photo_url: 'https://via.placeholder.com/150',
+    text: 'Not happy with the service.',
+    rating: 2,
+  },
+  {
+    author_name: 'Michael Brown',
+    profile_photo_url: 'https://via.placeholder.com/150',
+    text: 'Excellent experience!',
+    rating: 5,
+  },
+  {
+    author_name: 'Emily Davis',
+    profile_photo_url: 'https://via.placeholder.com/150',
+    text: 'Okay, but room for improvement.',
+    rating: 3,
+  }
+];
+
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent, Avatar, Typography, IconButton, Grid, Box } from '@mui/material';
+import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
+import axios from 'axios';
+
+const PLACE_ID = 'YOUR_PLACE_ID';
+const API_KEY = 'YOUR_API_KEY';
 
 interface Review {
   author_name: string;
-  rating: number;
+  profile_photo_url: string;
   text: string;
-  time:string
+  rating: number;
 }
 
-const reviews: Review[] = [
-  {
-    author_name: "John Doe",
-    rating: 5,
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    time: "2022-01-01T12:00:00Z",
-  },
-  {
-    author_name: "Jane Smith",
-    rating: 4,
-    text: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    time: "2022-01-02T13:00:00Z",
-  },
-  {
-    author_name: "Alice Johnson",
-    rating: 5,
-    text: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    time: "2022-01-03T14:00:00Z",
-  },
-  {
-    author_name: "Bob Williams",
-    rating: 3,
-    text: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    time: "2022-01-04T15:00:00Z",
-  },
-  {
-    author_name: "Eve Brown",
-    rating: 5,
-    text: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    time: "2022-01-05T16:00:00Z",
-  },
-];
-
 const GoogleReviewsRenderer: React.FC = () => {
-  const classes = useStyles();
+  const [reviews, setReviews] = useState<Review[]>(mockReviews);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const handlePrevClick = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? reviews.length - 1 : prevIndex - 1
-    );
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get('https://serpapi.com/search', {
+          params: {
+            engine: 'google_maps_reviews',
+            place_id: PLACE_ID,
+            api_key: API_KEY,
+          },
+        });
+        setReviews(response.data.reviews);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      }
+    };
+
+    fetchReviews();
+  }, []);
+
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? 0 : prevIndex - 4));
   };
 
-  const handleNextClick = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === reviews.length - 1 ? 0 : prevIndex + 1
-    );
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 4 >= reviews.length ? prevIndex : prevIndex + 4));
   };
 
   return (
-    <Container className={classes.container}>
-      <div className={classes.root}>
-        <Typography variant="h4" className={classes.mainTitle} gutterBottom>
-          Customer Views
-        </Typography>
-        <Grid container spacing={3}>
-          {reviews.length > 0 &&
-            reviews.slice(currentIndex, currentIndex + 4).map((review, index) => (
-              <Grid key={index} item xs={12} sm={9} md={6} lg={3}>
-                <Card className={classes.card}>
-                  <CardContent className={classes.cardContent}>
-                    <Typography variant="h6" component="h2">
-                      {review.author_name}
-                    </Typography>
-                    <Typography variant="body1" component="p">
+    <Box sx={{ textAlign: 'center', padding: 2 }}>
+      <Typography variant="h4" gutterBottom>
+        Customer Reviews
+      </Typography>
+      {reviews.length === 0 ? (
+        <Typography>No reviews available</Typography>
+      ) : (
+        <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <IconButton onClick={handlePrev} disabled={currentIndex === 0} sx={{ position: 'absolute', left: 0 }}>
+            <ArrowBackIos />
+          </IconButton>
+          <Grid container spacing={2} justifyContent="flex-start" sx={{ flexWrap: 'nowrap', overflowX: 'auto' }}>
+            {reviews.slice(currentIndex, currentIndex + 4).map((review, index) => (
+              <Grid item key={index} sx={{ flex: '0 0 auto', width: { xs: '100%', sm: 'calc(50% - 16px)', md: 'calc(33.333% - 16px)', lg: 'calc(25% - 16px)' } }}>
+                <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                  <CardContent>
+                    <Box display="flex" alignItems="center" mb={2}>
+                      <Avatar src={review.profile_photo_url} alt={review.author_name} />
+                      <Box ml={2}>
+                        <Typography variant="h6">{review.author_name}</Typography>
+                      </Box>
+                    </Box>
+                    <Typography variant="body2" gutterBottom>
                       {review.text}
                     </Typography>
-                    <Typography color="textSecondary">{`Rating: ${review.rating}/5`}</Typography>
+                    <Box mt="auto">
+                      <Typography variant="body2">
+                        {Array.from({ length: 5 }).map((_, starIndex) => (
+                          starIndex < review.rating
+                            ? <span key={starIndex}>⭐</span>
+                            : <span key={starIndex}>☆</span>
+                        ))}
+                      </Typography>
+                    </Box>
                   </CardContent>
                 </Card>
               </Grid>
             ))}
-        </Grid>
-        {reviews.length > 4 && (
-          <div className={classes.arrowsContainer}>
-            <IconButton className={classes.arrowButton} onClick={handlePrevClick}>
-              <ArrowBackIcon />
-            </IconButton>
-            <IconButton className={classes.arrowButton} onClick={handleNextClick}>
-              <ArrowForwardIcon />
-            </IconButton>
-          </div>
-        )}
-      </div>
-    </Container>
+          </Grid>
+          <IconButton onClick={handleNext} disabled={currentIndex + 4 >= reviews.length} sx={{ position: 'absolute', right: 0 }}>
+            <ArrowForwardIos />
+          </IconButton>
+        </Box>
+      )}
+    </Box>
   );
 };
 
