@@ -5,6 +5,7 @@ import App from '../App';
 import ProductDetailsRenderer from '../components/Components-Product-Details/Product-Details-Renderer';
 import GroceryItemForm from '../components/Components-Grocery-Item/Grocery-Item-Form';
 import ProductListingPageRenderer from '../components/Product-Listing-Page/Product-Listing-Page-Renderer';
+import GroceryItemsList from '../components/Components-Grocery-Item/Grocery-Items-List';
 
 
 export default () => {
@@ -28,6 +29,7 @@ export default () => {
                 price={10.99}
             />} />
             <Route path='addProduct' element={<GroceryItemForm />} />
+            <Route path='productEdit' element={<GroceryItemsList />} />
             <Route path='productList/category/:categoryid' element={<ProductListingPageRenderer />} />
 
             {/* <Route path='forgot-password' element={<ForgotPassword />} />
