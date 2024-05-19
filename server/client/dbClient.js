@@ -35,13 +35,33 @@ async function getAllProducts() {
     const col = db.collection("Products");
 
     const products = await col.find({}).toArray();
+    console.log("all products "+JSON.stringify(products))
     return products;
   } catch (err) {
     console.error("Error fetching products: ", err);
     throw err;
   }
 }
+/**
+ *
+ * @returns Load all the Products Categories
+ */
+async function getProductCategories() {
+  const client = await createDocDBConnection();
 
+  try {
+    const db = client.db(dbName);
+    const col = db.collection("Categories");
+
+    const products = await col.find({}).toArray();
+    console.log("all Categories "+JSON.stringify(products))
+    return products;
+  } catch (err) {
+    console.error("Error fetching Categories: ", err);
+    throw err;
+  }
+}
 module.exports = {
-  getAllProducts
+  getAllProducts,
+  getProductCategories
 };

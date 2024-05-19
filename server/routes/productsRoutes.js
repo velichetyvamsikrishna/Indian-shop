@@ -18,7 +18,7 @@ router.get("/all", async (req, res) => {
 });
 router.get("/allcategories", async (req, res) => {
   try {
-    const categories = await getProductCategories();
+    const categories = await dbClient.getProductCategories();
     res.status(200).json({ status: "success", categories: categories });
   } catch (err) {
     res.status(500).json({ error: "Internal Server Error" });
@@ -85,18 +85,37 @@ router.post("/delete", processDelete, (req, res) => {
 //getCategories: {id,name}, getBestSellers: , getProductsByCategoryId, getProductByProductId, getProducts : addProduct, editProduct, deleteProduct,
 //post requests
 //=>/products/getproducts=>{filterType:string (all,bestSellers,byCategoryId,byProductId),filterValue:string,sortby:{fieldName:'asc' || 'desc'},limit:{from:,to}}
-router.post("/getproducts", processGetProductsRequest, (req, res) => {
-  const products = req.products;
-  if (products.length > 0)
-    res.status(200).json({ 'status': 'success', products: products });
-  else res.status(404).json({ 'status': 'fail', products: [] });
-})
+
+// router.post("/getproducts", processGetProductsRequest, (req, res) => {
+//   const products = req.products;
+//   if (products.length > 0)
+//     res.status(200).json({ 'status': 'success', products: products });
+//   else res.status(404).json({ 'status': 'fail', products: [] });
+// })
+
+router.post("/getproducts", async (req, res) => {
+  try {
+    const products = await dbClient.getAllProducts();
+    res.status(200).json({ status: "success", products: products });
+  } catch (err) {
+    console.error("Error fetching products:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+router.post("/getcategories", async (req, res) => {
+  try {
+    const categories = await dbClient.getProductCategories();
+    res.status(200).json({ status: "success", categories: categories });
+  } catch (err) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 //=>/products/categories => {sort:asc/desc}
-router.post("/getcategories", processGetCategoriesRequest, (req, res) => {
-  const categories = req.categories || [];
-  if (categories.length > 0)
-    res.status(200).json({ 'status': 'success', categories: categories });
-  else res.status(404).json({ 'status': 'fail', categories: [] });
-  res.end();
-})
+// router.post("/getcategories", processGetCategoriesRequest, (req, res) => {
+//   const categories = req.categories || [];
+//   if (categories.length > 0)
+//     res.status(200).json({ 'status': 'success', categories: categories });
+//   else res.status(404).json({ 'status': 'fail', categories: [] });
+//   res.end();
+// })
 module.exports = router;
