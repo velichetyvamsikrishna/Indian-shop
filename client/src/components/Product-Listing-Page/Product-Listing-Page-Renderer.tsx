@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import { useParams } from "react-router-dom";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import {
   Container,
@@ -13,35 +14,32 @@ import {
 import SortIcon from "@material-ui/icons/Sort";
 import GroceryItemCardRenderer from "../Grocery-Item-Card/Grocery-Item-Card-Renderer";
 import SearchIcon from "@mui/icons-material/Search";
-
-const products = [
-  // Sample product data
-  { id: 1, name: "Product 1", price: 10.99, imageUrl: "product1.jpg" },
-  { id: 2, name: "Product 2", price: 15.99, imageUrl: "product2.jpg" },
-  { id: 3, name: "Product 3", price: 20.49, imageUrl: "product3.jpg" },
-  { id: 4, name: "Product 4", price: 12.99, imageUrl: "product4.jpg" },
-  { id: 5, name: "Product 5", price: 8.99, imageUrl: "product5.jpg" },
-  { id: 6, name: "Product 6", price: 25.99, imageUrl: "product6.jpg" },
-  { id: 7, name: "Product 7", price: 18.49, imageUrl: "product7.jpg" },
-  { id: 8, name: "Product 8", price: 9.99, imageUrl: "product8.jpg" },
-  { id: 9, name: "Product 9", price: 14.99, imageUrl: "product9.jpg" },
-  { id: 10, name: "Product 10", price: 22.49, imageUrl: "product10.jpg" },
-  { id: 11, name: "Product 11", price: 17.99, imageUrl: "product11.jpg" },
-  { id: 12, name: "Product 12", price: 11.49, imageUrl: "product12.jpg" },
-];
+//apis
+import { useGetProductsByCategoryAPI } from "../../api/productsAPI";
 
 const ProductListingPageRenderer: React.FC = () => {
   const classes = useStyles();
+  const [products,setProducts]=useState<any[]>([]);
+
+  const {categoryid}=useParams();
+  useEffect(()=>{
+    updateProducts();
+  },[]);
+  const updateProducts=async ()=>{
+    const productsList=await useGetProductsByCategoryAPI(categoryid);
+    
+    setProducts(productsList);
+  }
 
   return (
     <Container maxWidth="lg" className={classes.container}>
       <div className={classes.header}>
         <div className={classes.available} >
           <Typography className={classes.title}>
-            Grocery Products
+            {products[0]?.CAT_NAME}
           </Typography>
           <Typography variant="body2">
-            <span>246 available</span>
+            <span>{products.length} available</span>
           </Typography>
         </div>
         <div className={classes.controls}>
@@ -76,7 +74,7 @@ const ProductListingPageRenderer: React.FC = () => {
       <Grid container spacing={3}>
         {products.map((product) => (
           <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
-            <GroceryItemCardRenderer />
+            <GroceryItemCardRenderer product={product}/>
           </Grid>
         ))}
       </Grid>

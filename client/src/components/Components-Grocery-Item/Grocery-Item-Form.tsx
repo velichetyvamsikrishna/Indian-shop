@@ -266,9 +266,9 @@ export default GroceryItemForm;
 const DragAndDropImages = () => {
   const [images, setImages] = useState([]);
 
-  const handleDrop = (droppedImages) => {
+  const handleDrop = (droppedImages: any) => {
     // Handle dropped images
-    setImages([...images, ...droppedImages]);
+    // setImages([...images, ...droppedImages]);
   };
 
   return (

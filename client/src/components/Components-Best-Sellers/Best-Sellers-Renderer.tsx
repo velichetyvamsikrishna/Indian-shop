@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
   Typography,
   Card,
@@ -11,12 +11,28 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import GroceryItemCardRenderer from "../Grocery-Item-Card/Grocery-Item-Card-Renderer";
 import { useStyles } from "./Best-Sellers.styles";
+//apis
+import { useBestSellersAPI } from "../../api/productsAPI";
+
+// discount:bestSeller.bestSeller.Discount,
+//     title: bestSeller.bestSeller.Name,
+//     pricePerVolume: bestSeller.bestSeller.PricePerUnitQuantity,
+//     currentPrice: bestSeller.bestSeller.DiscountedPrice,
+//     originalPrice: bestSeller.bestSeller.Price,
 
 const BestSellersRenderer: React.FC = () => {
   const classes = useStyles();
-  const cards = [1, 2, 3, 4, 5, 6]; // Placeholder for card content
+  const [cards,setCards] = useState<any[]>([]) // Placeholder for card content
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
+  useEffect(()=>{
+    updateBestSellers();
+  },[]);
+  const updateBestSellers=async ()=>{
+    const bestSellers=await useBestSellersAPI();
+    console.log(bestSellers);
+    setCards(bestSellers);
+  }
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => Math.max(0, prevIndex - 1));
   };
@@ -33,9 +49,10 @@ const BestSellersRenderer: React.FC = () => {
         </Typography>
         <div className={classes.cardContainer}>
           <Grid container spacing={4}>
+            
             {cards.slice(currentIndex, currentIndex + 4).map((card, index) => (
               <Grid key={index} item xs={12} sm={9} md={6} lg={3}>
-                <GroceryItemCardRenderer />
+                <GroceryItemCardRenderer product={card}/>
               </Grid>
             ))}
           </Grid>

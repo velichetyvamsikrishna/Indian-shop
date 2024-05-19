@@ -28,8 +28,11 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 app.options("*", cors());
 
+//routes
 const productsRoutes = require("./routes/productsRoutes");
 app.use("/products", productsRoutes);
+const userRoutes=require("./routes/userRoutes")
+app.use("/users",userRoutes);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./public/index.html"));
@@ -50,15 +53,20 @@ const server = https.createServer(
 const port = 3000;
 
 // Start the server
-const connectString="mongodb+srv://krishnaraodemudamma:cVKRP58Co5WPp8LS@shoppingapp.kjexwsq.mongodb.net/shopping-app?retryWrites=true&w=majority&appName=ShoppingApp";
-try {
-     mongoose.connect(connectString).then(() => {
-        console.log(" Mongoose is connected");
-        server.listen(port,()=>{
-            console.log(`Server running on port ${port}`)
-        });
-     });
-  } catch (e) {
-    console.log("could not connect");
-    console.log(e);
-  }
+// const connectString="mongodb+srv://krishnaraodemudamma:cVKRP58Co5WPp8LS@shoppingapp.kjexwsq.mongodb.net/shopping-app?retryWrites=true&w=majority&appName=ShoppingApp";
+// try {
+//      mongoose.connect(connectString).then(() => {
+//         console.log(" Mongoose is connected");
+//         server.listen(port,()=>{
+//             console.log(`Server running on port ${port}`)
+//         });
+//      });
+//   } catch (e) {
+//     console.log("could not connect");
+//     console.log(e);
+//   }
+
+// Start the server
+server.listen(port, () => {
+  console.log(`Server is running on https://localhost:${port}`);
+});

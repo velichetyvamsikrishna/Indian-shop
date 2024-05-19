@@ -5,6 +5,7 @@ import App from '../App';
 import ProductDetailsRenderer from '../components/Components-Product-Details/Product-Details-Renderer';
 import GroceryItemForm from '../components/Components-Grocery-Item/Grocery-Item-Form';
 import ProductListingPageRenderer from '../components/Product-Listing-Page/Product-Listing-Page-Renderer';
+import GroceryItemsList from '../components/Components-Grocery-Item/Grocery-Items-List';
 
 
 export default () => {
@@ -15,8 +16,8 @@ export default () => {
             <Route path='/' element={<SignInRenderer />} />
             <Route path='login' element={<SignInRenderer />} />
             <Route path='signup' element={<SignUp />} />
-            <Route path='home' element={<App />} />
-
+            <Route path='home' element={<App />}>
+            </Route>
             <Route path='productDetail' element={<ProductDetailsRenderer
                 name={"Product Name"}
                 description={"Product Description"}
@@ -28,7 +29,8 @@ export default () => {
                 price={10.99}
             />} />
             <Route path='addProduct' element={<GroceryItemForm />} />
-            <Route path='productList' element={<ProductListingPageRenderer />} />
+            <Route path='productEdit' element={<GroceryItemsList />} />
+            <Route path='productList/category/:categoryid' element={<ProductListingPageRenderer />} />
 
             {/* <Route path='forgot-password' element={<ForgotPassword />} />
             <Route element={<Layout ensureAuthenticated />}>{getRoutesByRole(role)}</Route>

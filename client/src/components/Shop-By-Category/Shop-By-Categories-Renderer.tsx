@@ -2,7 +2,7 @@ import React, { useState,useEffect } from "react";
 import { Grid, Typography, Container } from "@material-ui/core";
 import CategoryCardRenderer from "./Category-Card-Renderer";
 import { shopByCategory } from "./Shop-By-Category.styles";
-import { useGetAllCategoriesAPI } from "./../../api/productsAPI";
+import { useGetAllCategoriesAPI, useCategoriesAPI } from "./../../api/productsAPI";
 
 const ShopByCategoriesRenderer: React.FC = () => {
   const classes = shopByCategory();
@@ -11,9 +11,10 @@ const ShopByCategoriesRenderer: React.FC = () => {
     fetchCategories();
   }, []);
   const fetchCategories = async () => {
-    const response = await useGetAllCategoriesAPI();
-    const data = await response.data;
-    setCategories(data?.categories);
+    // const response = await useGetAllCategoriesAPI();
+    const response = await useCategoriesAPI();
+    // const data = await response.data;
+    setCategories(response);
   };
   return (
     <Container maxWidth="lg" >
