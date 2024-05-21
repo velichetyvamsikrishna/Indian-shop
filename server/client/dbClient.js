@@ -35,7 +35,7 @@ async function getAllProducts() {
     const col = db.collection("Products");
 
     const products = await col.find({}).toArray();
-    console.log("all products "+JSON.stringify(products))
+    console.log("all products " + JSON.stringify(products))
     return products;
   } catch (err) {
     console.error("Error fetching products: ", err);
@@ -54,14 +54,56 @@ async function getProductCategories() {
     const col = db.collection("Categories");
 
     const products = await col.find({}).toArray();
-    console.log("all Categories "+JSON.stringify(products))
+    console.log("all Categories " + JSON.stringify(products))
     return products;
   } catch (err) {
     console.error("Error fetching Categories: ", err);
     throw err;
   }
 }
+
+/**
+ *
+ * @returns Load all the Products by category by Id
+ */
+async function getProductsByCategoryId(categoryId) {
+  const client = await createDocDBConnection();
+
+  try {
+    const db = client.db(dbName);
+    const col = db.collection("Products");
+
+    const products = await col.find({ CAT_ID: parseInt(categoryId) }).toArray();
+    console.log("all getProductsByCategoryId " + JSON.stringify(products))
+    return products;
+  } catch (err) {
+    console.error("Error fetching getProductsByCategoryId: ", err);
+    throw err;
+  }
+}
+
+/**
+ *
+ * @returns Load all the Products by bestsellets
+ */
+async function getProductsByFilter(filter) {
+  const client = await createDocDBConnection();
+
+  try {
+    const db = client.db(dbName);
+    const col = db.collection("Products");
+
+    const products = await col.find({ Labels: filter}).toArray();
+    console.log("all getProductsByFilter " + JSON.stringify(products))
+    return products;
+  } catch (err) {
+    console.error("Error fetching getProductsByFilter: ", err);
+    throw err;
+  }
+}
 module.exports = {
   getAllProducts,
-  getProductCategories
+  getProductCategories,
+  getProductsByCategoryId,
+  getProductsByFilter
 };

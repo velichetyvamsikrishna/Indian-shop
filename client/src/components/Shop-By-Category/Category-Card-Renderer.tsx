@@ -12,8 +12,10 @@ const CategoryCardRenderer = (data:any) => {
       <CardMedia
         component="img"
         className={classes.imageStyles}
-        image={data.data.PROD_IMG}
-        alt="green iguana"
+        // image={data.data.image}
+        alt="img"
+        // src={data.data.image}
+        src={`data:image/png;base64, ${data.data.image}`}
       />
       <CardContent className={classes.categoryTitleArea}>
         <Typography className={classes.categoryTitle}>{data.data.CAT_NAME}</Typography>

@@ -110,6 +110,25 @@ router.post("/getcategories", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+router.post("/getProductsByCategoryId", async (req, res) => {
+  try {
+    const categoryId = req.body.categoryId;
+    const products = await dbClient.getProductsByCategoryId(categoryId);
+    res.status(200).json({ status: "success", products: products });
+  } catch (err) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.post("/getProductsByFilter", async (req, res) => {
+  try {
+    const filter = req.body.filter;
+    const products = await dbClient.getProductsByFilter(filter);
+    res.status(200).json({ status: "success", products: products });
+  } catch (err) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 //=>/products/categories => {sort:asc/desc}
 // router.post("/getcategories", processGetCategoriesRequest, (req, res) => {
 //   const categories = req.categories || [];
