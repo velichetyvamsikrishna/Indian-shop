@@ -11,10 +11,13 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import GroceryItemCardRenderer from "../Grocery-Item-Card/Grocery-Item-Card-Renderer";
 import { useStyles } from "./Kitchen-Home-Supply.styles";
+//apis
+import { useGetProductsByCategoryIDAPI } from "../../api/productsAPI";
 
 const KitchenHomeSupplyRenderer: React.FC = () => {
   const classes = useStyles();
-  const cards = [1, 2, 3, 4, 5, 6]; // Placeholder for card content
+  // const cards = [1, 2, 3, 4, 5, 6]; // Placeholder for card content
+  const [cards,setCards]=useState<any[]>([]);// products
   const cardRef = useRef<HTMLDivElement>(null);
   const [numCardsToShow, setNumCardsToShow] = useState(4); // Initial number of cards to show
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -35,8 +38,12 @@ const KitchenHomeSupplyRenderer: React.FC = () => {
     handleResize(); // Call the function initially
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  
-
+  useEffect(()=>{
+    updateItems();
+  },[]);
+  const updateItems=async ()=>{
+    setCards(await useGetProductsByCategoryIDAPI(13));
+  }
   const handlePrev = () => {
     setCurrentIndex((prevIndex) => Math.max(0, prevIndex - numCardsToShow));
   };
@@ -72,7 +79,7 @@ const KitchenHomeSupplyRenderer: React.FC = () => {
                 .slice(currentIndex, currentIndex + numCardsToShow)
                 .map((card, index) => (
                   <Grid key={index} item >
-                    <GroceryItemCardRenderer />
+                    <GroceryItemCardRenderer product={card}/>
                   </Grid>
                 ))}
             </Grid>

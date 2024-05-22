@@ -6,7 +6,9 @@ const apiConfig = {
 	},
 	POST: {
 		PRODUCTS:"/products/getproducts",
-		CATEGORIES:"/products/categories"
+		CATEGORIES:"/products/categories",
+		PRODUCTSBYFILTER:"/products/getProductsByFilter",
+		PRODUCTSBYCATID:"/products/getProductsByCategoryId"
 	},
 	PUT: {
 	},

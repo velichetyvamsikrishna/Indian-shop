@@ -6,8 +6,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CartDrawerRenderer from "../Components-Cart/Cart-Drawer-Renderer";
 import { useGetAllCategoriesAPI, useCategoriesAPI } from "./../../api/productsAPI";
-import { Link } from 'react-router-dom';
-
+import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,6 +86,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NavbarRenderer = () => {
+  const navigate=useNavigate();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -108,7 +109,10 @@ const NavbarRenderer = () => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-
+  const handleCategoryClick=(categoryId:number)=>{
+   navigate(`/productList/category/${categoryId}`);
+  // alert(categoryId);
+  }
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
@@ -164,7 +168,8 @@ const NavbarRenderer = () => {
             {categories.map((x) => {
               return (
                 <div className={classes.menuItem}>
-                 <Link to={`/productList/category/${x.CAT_ID}`}> {x.CAT_NAME} </Link>
+                 <span style={{cursor:"pointer"}} onClick={()=>handleCategoryClick(x.CAT_ID)}> {x.CAT_NAME} </span>
+                 {/* to={`/productList/category/${x.CAT_ID}`} */}
                   </div>
               );
             })}

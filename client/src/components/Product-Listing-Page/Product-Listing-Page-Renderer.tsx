@@ -15,7 +15,7 @@ import SortIcon from "@material-ui/icons/Sort";
 import GroceryItemCardRenderer from "../Grocery-Item-Card/Grocery-Item-Card-Renderer";
 import SearchIcon from "@mui/icons-material/Search";
 //apis
-import { useGetProductsByCategoryAPI } from "../../api/productsAPI";
+import { useGetProductsByCategoryIDAPI } from "../../api/productsAPI";
 
 const ProductListingPageRenderer: React.FC = () => {
   const classes = useStyles();
@@ -26,8 +26,8 @@ const ProductListingPageRenderer: React.FC = () => {
     updateProducts();
   },[]);
   const updateProducts=async ()=>{
-    const productsList=await useGetProductsByCategoryAPI(categoryid);
-    
+    const productsList=await useGetProductsByCategoryIDAPI(categoryid);
+    console.log(productsList);
     setProducts(productsList);
   }
 
@@ -39,7 +39,7 @@ const ProductListingPageRenderer: React.FC = () => {
             {products[0]?.CAT_NAME}
           </Typography>
           <Typography variant="body2">
-            <span>{products.length} available</span>
+            <span >{products.length} available</span>
           </Typography>
         </div>
         <div className={classes.controls}>

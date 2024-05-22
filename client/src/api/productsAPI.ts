@@ -99,14 +99,32 @@ export const useCategoriesAPI=async ():Promise<category[]>=>{
 		return [];
 	}
 }
-export const useBestSellersAPI=async ():Promise<any[]>=>{
+export const useGetProductsByFilterAPI=async (filterObject:any):Promise<any[]>=>{
 	// =>/products/getproducts=>{filterType:string (all,bestSellers,byCategoryId,byProductId),filterValue:string,sortby:{fieldName:'asc' || 'desc'},limit:{from:,to}}
-	const url=apiConfig.POST.PRODUCTS;
+	const url=apiConfig.POST.PRODUCTSBYFILTER;
 	try{
-		const response=await api.post(url,{filterType:"bestSellers"});
+		const response=await api.post(url,filterObject);
 		
 		if(response.data.status==="success"){
-			
+			// console.log(response.data.products);
+			return response.data.products;
+		}
+		else{
+			return [];
+		}
+	}catch(error){
+		console.log(error);
+		return [];
+	}
+}
+export const useGetProductsByCategoryIDAPI=async (catId:any):Promise<any[]>=>{
+	// =>/products/getproducts=>{filterType:string (all,bestSellers,byCategoryId,byProductId),filterValue:string,sortby:{fieldName:'asc' || 'desc'},limit:{from:,to}}
+	const url=apiConfig.POST.PRODUCTSBYCATID;
+	try{
+		const response=await api.post(url,{"categoryId":catId});
+		
+		if(response.data.status==="success"){
+			console.log(response.data.products);
 			return response.data.products;
 		}
 		else{
