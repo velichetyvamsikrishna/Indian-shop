@@ -17,8 +17,7 @@ import { useGetProductsByFilterAPI } from "../../api/productsAPI";
 
 const BestSellersRenderer: React.FC = () => {
   const classes = useStyles();
-  // const cards = [1, 2, 3, 4, 5, 6]; 
-  const [cards,setCards]=useState<any[]>([]);// products
+  const [cards, setCards]=useState<any[]>([]);// products
   const cardRef = useRef<HTMLDivElement>(null);
   const [numCardsToShow, setNumCardsToShow] = useState(4); // Initial number of cards to show
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -38,12 +37,21 @@ const BestSellersRenderer: React.FC = () => {
     handleResize(); // Call the function initially
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  useEffect(()=>{
+
+  useEffect(() => {
     updateBestSellers();
-  },[]);
-  const updateBestSellers=async ()=>{
-    setCards(await useGetProductsByFilterAPI({"filter":"Bestsellers"}));
-  }
+  }, []);
+
+  const updateBestSellers = () => {
+    useGetProductsByFilterAPI({ filter: "Bestsellers" })
+      .then((products) => {
+        setCards(products);
+      })
+      .catch((error) => {
+        console.log("Failed to fetch best sellers:", error);
+        setCards([]); // Optionally set to an empty array or handle it as needed
+      });
+  };
   
 
   const handlePrev = () => {
