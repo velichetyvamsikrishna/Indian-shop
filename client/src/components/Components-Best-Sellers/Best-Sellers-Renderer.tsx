@@ -11,13 +11,12 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import GroceryItemCardRenderer from "../Grocery-Item-Card/Grocery-Item-Card-Renderer";
 import { useStyles } from "./Best-Sellers.styles";
-//api
 import { useGetProductsByFilterAPI } from "../../api/productsAPI";
 
 
 const BestSellersRenderer: React.FC = () => {
   const classes = useStyles();
-  const [cards, setCards]=useState<any[]>([]);// products
+  const [cards, setCards]=useState<any[]>([]); // products
   const cardRef = useRef<HTMLDivElement>(null);
   const [numCardsToShow, setNumCardsToShow] = useState(4); // Initial number of cards to show
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -71,7 +70,8 @@ const BestSellersRenderer: React.FC = () => {
           <Typography variant="h4" className={classes.mainTitle}>
             Best Sellers
           </Typography>
-          <div className={classes.cardContainer}>
+          {cards.length > 0 ? (
+            <div className={classes.cardContainer}>
             <IconButton
               className={`${classes.arrowButton} ${classes.leftArrow}`}
               onClick={handlePrev}
@@ -101,6 +101,11 @@ const BestSellersRenderer: React.FC = () => {
               <ChevronRightIcon fontSize="large" />
             </IconButton>
           </div>
+          ): 
+          <Typography variant="h6" className={classes.mainTitle}>
+            No Data Found
+          </Typography>
+          }
         </div>
       {/* </Container> */}
     </div>
