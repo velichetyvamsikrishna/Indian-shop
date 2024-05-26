@@ -3,8 +3,10 @@ import { Grid, Typography, Container } from "@material-ui/core";
 import CategoryCardRenderer from "./Category-Card-Renderer";
 import { shopByCategory } from "./Shop-By-Category.styles";
 import { useGetAllCategoriesAPI, useCategoriesAPI } from "./../../api/productsAPI";
+import { useNavigate } from "react-router-dom";
 
 const ShopByCategoriesRenderer: React.FC = () => {
+  const navigate=useNavigate();
   const classes = shopByCategory();
   const [categories, setCategories] = useState<any[]>([]);
   useEffect(() => {
@@ -16,6 +18,10 @@ const ShopByCategoriesRenderer: React.FC = () => {
     // const data = await response.data;
     setCategories(response);
   };
+  const handleCategoryShop=(category:any)=>{
+    // console.log(category.category.CAT_ID);
+    navigate(`/productList/category/${category.category.CAT_ID}`);
+  }
   return (
     <Container maxWidth="lg" >
       <div className={classes.root}>
@@ -25,8 +31,8 @@ const ShopByCategoriesRenderer: React.FC = () => {
         <Grid container spacing={2}>
           {categories.map((category) => {
             return (
-              <Grid item xs={12} sm={6} md={4} lg={2} >
-                <CategoryCardRenderer data={category}/>
+              <Grid item xs={12} sm={6} md={4} lg={2} onClick={()=>{handleCategoryShop({category})}} style={{cursor:"pointer"}}>
+                <CategoryCardRenderer data={category} />
               </Grid>
             );
           })}

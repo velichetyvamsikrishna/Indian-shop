@@ -4,18 +4,21 @@ import { Card, CardMedia, CardContent, CardActions, Button, Typography, IconButt
 import { useStyles } from "./Grocerty-Item-Card.styles";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
+import { isClassExpression } from 'typescript';
+import apiConfig from "../../api/client/endpoint";
 
+const BASE_URL = apiConfig.BASE_URL;
 
 const GroceryItemCardRenderer = (product:any) => {
 
   const item:any={};
   
   if(product.product){
-      item.discount= Math.round(product.product.Discount.$numberDecimal*100)/100,
+      item.discount= Math.round(product.product.Discount*100)/100,
       item.title= product.product.Name,
-      item.pricePerVolume= Math.round(product.product.PricePerUnitQuantity.$numberDecimal*100)/100,
-      item.currentPrice= Math.round(product.product.DiscountedPrice.$numberDecimal*100)/100,
-      item.originalPrice= Math.round(product.product.Price.$numberDecimal*100)/100,
+      item.pricePerVolume= Math.round(product.product.PricePerUnitQuantity*100)/100,
+      item.currentPrice= Math.round(product.product.DiscountedPrice*100)/100,
+      item.originalPrice= Math.round(product.product.Price*100)/100,
       item.image=product.product.PROD_IMG
   };
   
@@ -30,7 +33,8 @@ const GroceryItemCardRenderer = (product:any) => {
             <div className={classes.overlay}></div>
             <div className={classes.imageContainer}>
               <div className={classes.image}>
-                <img src={item.image} alt="Product" />
+              {/* src={`data:image/png;base64,${item.image}`} */}
+                <img src={`${BASE_URL}images/PRODUCTS/${item.image}`} alt="Product" className={classes.image}/>
               </div>
             </div>
           </div>

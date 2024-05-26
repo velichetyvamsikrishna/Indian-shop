@@ -11,10 +11,14 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import GroceryItemCardRenderer from "../Grocery-Item-Card/Grocery-Item-Card-Renderer";
 import { useStyles } from "./Best-Sellers.styles";
+//api
+import { useGetProductsByFilterAPI } from "../../api/productsAPI";
+
 
 const BestSellersRenderer: React.FC = () => {
   const classes = useStyles();
-  const cards = [1, 2, 3, 4, 5, 6]; // Placeholder for card content
+  // const cards = [1, 2, 3, 4, 5, 6]; 
+  const [cards,setCards]=useState<any[]>([]);// products
   const cardRef = useRef<HTMLDivElement>(null);
   const [numCardsToShow, setNumCardsToShow] = useState(4); // Initial number of cards to show
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -30,11 +34,16 @@ const BestSellersRenderer: React.FC = () => {
         setNumCardsToShow(Math.max(newNumCardsToShow, 1)); // Ensure at least 1 card is shown
       }
     };
-  
     window.addEventListener("resize", handleResize);
     handleResize(); // Call the function initially
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  useEffect(()=>{
+    updateBestSellers();
+  },[]);
+  const updateBestSellers=async ()=>{
+    setCards(await useGetProductsByFilterAPI({"filter":"Bestsellers"}));
+  }
   
 
   const handlePrev = () => {
@@ -72,7 +81,7 @@ const BestSellersRenderer: React.FC = () => {
                 .slice(currentIndex, currentIndex + numCardsToShow)
                 .map((card, index) => (
                   <Grid key={index} item >
-                    <GroceryItemCardRenderer />
+                    <GroceryItemCardRenderer product={card}/>
                   </Grid>
                 ))}
             </Grid>
