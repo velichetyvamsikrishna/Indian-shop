@@ -4,8 +4,11 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { categoryCard } from "./Shop-By-Category.styles";
+import apiConfig from "../../api/client/endpoint";
 
-const CategoryCardRenderer = (data:any) => {
+const BASE_URL = apiConfig.BASE_URL;
+
+const CategoryCardRenderer = (data: any) => {
   const classes = categoryCard();
   return (
     <Card className={classes.cardStyles}>
@@ -14,8 +17,8 @@ const CategoryCardRenderer = (data:any) => {
         className={classes.imageStyles}
         // image={data.data.image}
         alt="img"
-        // src={data.data.image}
-        src={`data:image/png;base64, ${data.data.image}`}
+        image={`${BASE_URL}images/CATEGORIES/${data.data.CAT_ID}.png`}
+      // src={`data:image/png;base64, ${data.data.image}`}
       />
       <CardContent className={classes.categoryTitleArea}>
         <Typography className={classes.categoryTitle}>{data.data.CAT_NAME}</Typography>

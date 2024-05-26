@@ -5,7 +5,9 @@ import { useStyles } from "./Grocerty-Item-Card.styles";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import { isClassExpression } from 'typescript';
+import apiConfig from "../../api/client/endpoint";
 
+const BASE_URL = apiConfig.BASE_URL;
 
 const GroceryItemCardRenderer = (product:any) => {
 
@@ -31,7 +33,8 @@ const GroceryItemCardRenderer = (product:any) => {
             <div className={classes.overlay}></div>
             <div className={classes.imageContainer}>
               <div className={classes.image}>
-                <img src={`data:image/png;base64,${item.image}`} alt="Product" className={classes.image}/>
+              {/* src={`data:image/png;base64,${item.image}`} */}
+                <img src={`${BASE_URL}images/PRODUCTS/${item.image}`} alt="Product" className={classes.image}/>
               </div>
             </div>
           </div>
