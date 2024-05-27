@@ -96,25 +96,21 @@ export const useStyles = makeStyles((theme:Theme) => createStyles({
         wordWrap: 'break-word',
     },
     priceContainer: {
-        left: 106.5,
-        top: 292,
-        position: 'relative',
-        display: 'block'
-    },
-    priceValue: {
-        color: '#0D3823',
-        fontSize: 16,
-        fontFamily: 'Proxima Nova',
-        fontWeight: 700,
-        wordWrap: 'break-word',
-    },
-    originalPrice: {
-        color: '#909592',
-        fontSize: 16,
-        fontFamily: 'Proxima Nova',
-        fontWeight: 400,
-        wordWrap: 'break-word',
-    },
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    top: 292,
+    position: "relative",
+  },
+  priceValue: {
+    fontWeight: "bold", // Bold for actual price
+    color: "#0D3823", // Grey color for actual price
+  },
+  originalPrice: {
+    textDecoration: "line-through", // Strikethrough for original price
+    color: "#909592", // Grey color for original price
+    marginLeft: theme.spacing(1), // Add some spacing between prices
+  },
     actionButtonsContainer: {
         left: 16,
         top: 326,
