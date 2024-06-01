@@ -37,7 +37,7 @@ const mockReviews = [
   }
 ];
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Card, CardContent, Avatar, Typography, IconButton, Grid, Box } from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 import axios from 'axios';
@@ -54,8 +54,28 @@ interface Review {
 
 const GoogleReviewsRenderer: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>(mockReviews);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
+  //relating display of reviews
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [reviewsToShow, setReviewsToShow]=useState(4);
+  const reviewDivRef = useRef<HTMLDivElement>(null);
+  const [reviewWidth,setReviewWidth]=useState(250);
+
+  const updateReviewsToShow = () => {
+    if (reviewDivRef.current) {
+      const availableWidth = reviewDivRef.current.offsetWidth;
+      const newReviewsToShow = Math.floor(availableWidth / reviewWidth);
+      setReviewsToShow(Math.max(newReviewsToShow, 1)); // Ensure at least 1 card is shown
+
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("resize", updateReviewsToShow);
+    updateReviewsToShow();
+  }, []);
+
+
+  //end
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -76,11 +96,11 @@ const GoogleReviewsRenderer: React.FC = () => {
   }, []);
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? 0 : prevIndex - 4));
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? 0 : prevIndex - reviewsToShow));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 4 >= reviews.length ? prevIndex : prevIndex + 4));
+    setCurrentIndex((prevIndex) => (prevIndex + reviewsToShow >= reviews.length ? prevIndex : prevIndex + reviewsToShow));
   };
 
   return (
@@ -95,9 +115,13 @@ const GoogleReviewsRenderer: React.FC = () => {
           <IconButton onClick={handlePrev} disabled={currentIndex === 0} sx={{ position: 'absolute', left: 0 }}>
             <ArrowBackIos />
           </IconButton>
-          <Grid container spacing={2} justifyContent="flex-start" sx={{ flexWrap: 'nowrap', overflowX: 'auto' }}>
-            {reviews.slice(currentIndex, currentIndex + 4).map((review, index) => (
-              <Grid item key={index} sx={{ flex: '0 0 auto', width: { xs: '100%', sm: 'calc(50% - 16px)', md: 'calc(33.333% - 16px)', lg: 'calc(25% - 16px)' } }}>
+          <Grid container spacing={2}
+                justifyContent={reviews.length>(currentIndex + reviewsToShow) ? "space-around" : "flex-start"}
+                sx={{ flexWrap: 'nowrap', overflowX: 'auto' }}
+                ref={reviewDivRef} >
+            {reviews.slice(currentIndex, currentIndex + reviewsToShow).map((review, index) => (
+              // <Grid item key={index} sx={{ flex: '0 0 auto', width: { xs: '100%', sm: 'calc(50% - 16px)', md: 'calc(33.333% - 16px)', lg: 'calc(25% - 16px)' }, background:"red" }}>
+              <Grid item key={index} width={reviewWidth} sx={{ flex: '0 0 auto'}}>
                 <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                   <CardContent>
                     <Box display="flex" alignItems="center" mb={2}>
@@ -106,9 +130,14 @@ const GoogleReviewsRenderer: React.FC = () => {
                         <Typography variant="h6">{review.author_name}</Typography>
                       </Box>
                     </Box>
-                    <Typography variant="body2" gutterBottom>
-                      {review.text}
-                    </Typography>
+                    <Box 
+                      height={100}
+                      overflow={"auto"}
+                      >
+                      <Typography variant="body2" gutterBottom>
+                        {review.text}
+                      </Typography>
+                    </Box>
                     <Box mt="auto">
                       <Typography variant="body2">
                         {Array.from({ length: 5 }).map((_, starIndex) => (
@@ -123,7 +152,7 @@ const GoogleReviewsRenderer: React.FC = () => {
               </Grid>
             ))}
           </Grid>
-          <IconButton onClick={handleNext} disabled={currentIndex + 4 >= reviews.length} sx={{ position: 'absolute', right: 0 }}>
+          <IconButton onClick={handleNext} disabled={currentIndex + reviewsToShow >= reviews.length} sx={{ position: 'absolute', right: 0 }}>
             <ArrowForwardIos />
           </IconButton>
         </Box>
