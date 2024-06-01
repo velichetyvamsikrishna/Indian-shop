@@ -4,167 +4,131 @@ import { toast } from "react-toastify";
 import apiConfig from "./client/endpoint";
 import api from "./client/webClient";
 
-export const  useGetProductsAPI = async () => {
-	const url = apiConfig.GET.GET_PRODUCTS;
+// Get Products API
+export const useGetProductsAPI = (): Promise<any> => {
+  const url = apiConfig.GET.GET_PRODUCTS;
 
-	const getProducts = await api
-		.get(url, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-		.then(
-			(resp) => {
-				let response = resp.data;
-				return response;
-			},
-			(error) => {
-				console.log(error);
-				throw error;
-			}
-		);
-
-	return getProducts;
+  return api.get(url, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(
+    (resp) => {
+      let response = resp.data;
+      return response;
+    }
+  ).catch(
+    (error) => {
+      console.log(error);
+      return [];
+    }
+  );
 };
 
-export const  useGetAllCategoriesAPI = async  () => {
-	const url = apiConfig.GET.GET_CATEGORIES;
+// Get All Categories API
+export const useGetAllCategoriesAPI = (): Promise<any> => {
+  const url = apiConfig.GET.GET_CATEGORIES;
 
-	// const getCategories = useQuery<void, null>(
-	// 	["get_categories_api"],
-	// 	() =>
-	// 		api
-	// 			.get(apiConfig.GET.GET_CATEGORIES, {
-	// 				headers: {
-	// 					"Content-Type": "application/json",
-	// 				},
-	// 			})
-	// 			.then(
-	// 				(resp) => {
-	// 					let response = resp.data;
-	// 					return response;
-	// 				},
-	// 				(error) => {
-	// 					// console.log(error);
-	// 					throw error;
-	// 				}
-	// 			),
-	// 	{
-	// 		onSuccess: (res) => {
-	// 			// console.log(res);
-	// 		},
-	// 		onError: (res) => {
-	// 			// const errorMessage = res.response ? res.response.data.description : "Oops.. Error to get devices. Try again!";
-	// 			toast.error("Oops.. Error to get devices. Try again!");
-	// 		},
-	// 	}
-	// );
-
-	const getCategories =  api
-		.get(url, {
-			headers: {
-				"Content-Type": "application/json",
-			},
-		})
-		.then(
-			(resp) => {
-				let response = resp;
-				return response;
-			},
-			(error) => {
-				console.log(error);
-				throw error;
-			}
-		);
-
-	return getCategories;
+  return api.get(url, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(
+    (resp) => {
+      let response = resp;
+      return response;
+    }
+  ).catch(
+    (error) => {
+      console.log(error);
+      return [];
+    }
+  );
 };
-type category={
-	CAT_ID:number,
-	CAT_NAME:string,
-	PROD_IMG:string
-  }
-export const useCategoriesAPI=async ():Promise<category[]>=>{
-	const url=apiConfig.POST.CATEGORIES;
-	try{
-		const categories=await api.post("/products/getcategories",{sort:"asc"});
-		if(categories.data.status==="success"){
-			return categories.data.categories;
-		}
-		else{
-			return [];
-		}
-	}catch(error){
-		console.log(error);
-		return [];
-	}
-}
-export const useGetProductsByFilterAPI=async (filterObject:any):Promise<any[]>=>{
-	// =>/products/getproducts=>{filterType:string (all,bestSellers,byCategoryId,byProductId),filterValue:string,sortby:{fieldName:'asc' || 'desc'},limit:{from:,to}}
-	const url=apiConfig.POST.PRODUCTSBYFILTER;
-	try{
-		const response=await api.post(url,filterObject);
-		
-		if(response.data.status==="success"){
-			// console.log(response.data.products);
-			return response.data.products;
-		}
-		else{
-			return [];
-		}
-	}catch(error){
-		console.log(error);
-		return [];
-	}
-}
-export const useGetProductsByCategoryIDAPI=async (catId:any):Promise<any[]>=>{
-	// =>/products/getproducts=>{filterType:string (all,bestSellers,byCategoryId,byProductId),filterValue:string,sortby:{fieldName:'asc' || 'desc'},limit:{from:,to}}
-	const url=apiConfig.POST.PRODUCTSBYCATID;
-	try{
-		const response=await api.post(url,{"categoryId":catId});
-		
-		if(response.data.status==="success"){
-			console.log(response.data.products);
-			return response.data.products;
-		}
-		else{
-			return [];
-		}
-	}catch(error){
-		console.log(error);
-		return [];
-	}
-}
-export const useGetProductsByCategoryAPI=async (categoryId:any):Promise<any[]>=>{
-	// =>/products/getproducts=>{filterType:string (all,bestSellers,byCategoryId,byProductId),filterValue:string,sortby:{fieldName:'asc' || 'desc'},limit:{from:,to}}
-	const url=apiConfig.POST.PRODUCTS;
-	try{
-		const response=await api.post(url,{filterType:"byCategoryId",filterValue:categoryId});
-		if(response.data.status==="success"){
-			return response.data.products;
-		}
-		else{
-			return [];
-		}
-	}catch(error){
-		console.log(error);
-		return [];
-	}
-}
 
-export const  useGetBrandsAPI = async () => {
-	const url = apiConfig.POST.BRANDS;
+// Categories API
+type category = {
+  CAT_ID: number,
+  CAT_NAME: string,
+  PROD_IMG: string
+};
 
-	try{
-		const categories=await api.post(url);
-		if(categories.data.status==="success"){
-			return categories.data.brands;
-		}
-		else{
-			return [];
-		}
-	}catch(error){
-		console.log(error);
-		return [];
-	}
+export const useCategoriesAPI = (): Promise<category[]> => {
+  const url = apiConfig.POST.CATEGORIES;
+
+  return api.post("/products/getcategories", { sort: "asc" }).then(
+    (categories) => {
+      if (categories.data.status === "success") {
+        return categories.data.categories;
+      } else {
+        return [];
+      }
+    }
+  ).catch(
+    (error) => {
+      console.log(error);
+      return [];
+    }
+  );
+};
+
+// Get Products by Filter API
+export const useGetProductsByFilterAPI = (filterObject: any): Promise<any[]> => {
+  const url = apiConfig.POST.PRODUCTSBYFILTER;
+
+  return api.post(url, filterObject).then(
+    (response) => {
+      if (response.data.status === "success") {
+        return response.data.products;
+      } else {
+        return [];
+      }
+    }
+  ).catch(
+    (error) => {
+      console.log(error);
+      return [];
+    }
+  );
+};
+
+// Get Products by Category ID API
+export const useGetProductsByCategoryIDAPI = (catId: any): Promise<any[]> => {
+  const url = apiConfig.POST.PRODUCTSBYCATID;
+
+  return api.post(url, { "categoryId": catId }).then(
+    (response) => {
+      if (response.data.status === "success") {
+        console.log(response.data.products);
+        return response.data.products;
+      } else {
+        return [];
+      }
+    }
+  ).catch(
+    (error) => {
+      console.log(error);
+      return [];
+    }
+  );
+};
+
+// Get Products by Category API
+export const useGetProductsByCategoryAPI = (categoryId: any): Promise<any[]> => {
+  const url = apiConfig.POST.PRODUCTS;
+
+  return api.post(url, { filterType: "byCategoryId", filterValue: categoryId }).then(
+    (response) => {
+      if (response.data.status === "success") {
+        return response.data.products;
+      } else {
+        return [];
+      }
+    }
+  ).catch(
+    (error) => {
+      console.log(error);
+      return [];
+    }
+  );
 };
