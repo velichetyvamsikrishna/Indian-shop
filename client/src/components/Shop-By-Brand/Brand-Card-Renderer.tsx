@@ -4,7 +4,9 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import apiConfig from "../../api/client/endpoint";
 
+const BASE_URL = apiConfig.BASE_URL;
 const useStyles = makeStyles((theme) => ({
   cardStyles: {
     maxWidth: 180,
@@ -34,17 +36,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BrandCardRenderer = () => {
+const BrandCardRenderer = (data: any) => {
   return (
     <Card className={useStyles().cardStyles}>
       <CardMedia
         component="img"
         className={useStyles().imageStyles}
-        image="https://i5.walmartimages.com/asr/90cdb9fd-c2d6-4f10-90c4-bbc16c6963a2.8590ae0e3e7ab073316455a9dd9cfd87.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF"
-        alt="green iguana"
+        image={`${BASE_URL}images/BRANDS/${data.data.filename}`}
+        alt="image"
       />
       <CardContent className={useStyles().categoryTitleArea}>
-        <Typography className={useStyles().categoryTitle}>Lizards</Typography>
+        <Typography className={useStyles().categoryTitle}>{data.data.name}</Typography>
       </CardContent>
     </Card>
   );

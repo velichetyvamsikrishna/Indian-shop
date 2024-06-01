@@ -8,7 +8,8 @@ const apiConfig = {
 		PRODUCTS:"/products/getproducts",
 		CATEGORIES:"/products/categories",
 		PRODUCTSBYFILTER:"/products/getProductsByFilter",
-		PRODUCTSBYCATID:"/products/getProductsByCategoryId"
+		PRODUCTSBYCATID:"/products/getProductsByCategoryId",
+		BRANDS:"/products/getBrands",
 	},
 	PUT: {
 	},

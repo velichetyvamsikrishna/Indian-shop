@@ -12,6 +12,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import GroceryItemCardRenderer from "../Grocery-Item-Card/Grocery-Item-Card-Renderer";
 import { useStyles } from "../Components-Kitchen-Home-Supply/Kitchen-Home-Supply.styles";
 import BrandCardRenderer from "./Brand-Card-Renderer";
+import {  useGetBrandsAPI } from "./../../api/productsAPI";
 
 const ShopByBrandRenderer: React.FC = () => {
   const classes = useStyles();
@@ -19,7 +20,16 @@ const ShopByBrandRenderer: React.FC = () => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [numCardsToShow, setNumCardsToShow] = useState(6); // Initial number of cards to show
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const [brands, setBrands] = useState<any[]>([]);
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+  const fetchCategories = async () => {
+    // const response = await useGetAllCategoriesAPI();
+    const response = await useGetBrandsAPI();
+    // const data = await response.data;
+    setBrands(response);
+  };
   useEffect(() => {
     const handleResize = () => {
       if (cardRef.current) {
@@ -28,7 +38,9 @@ const ShopByBrandRenderer: React.FC = () => {
         const containerWidth = cardsWidth - 300 - numCardsToShow*30; // Subtracting 100px padding from both sides
         console.log("Container Width:", containerWidth);
         const newNumCardsToShow = Math.floor(containerWidth / cardWidth);
-        setNumCardsToShow(Math.max(newNumCardsToShow, 1)); // Ensure at least 1 card is shown
+       // setNumCardsToShow(Math.max(newNumCardsToShow, 1)); // Ensure at least 1 card is shown
+        setNumCardsToShow(4); // Ensure at least 1 card is shown
+
       }
     };
   
@@ -69,11 +81,11 @@ const ShopByBrandRenderer: React.FC = () => {
               className={classes.gridContainer}
               ref={cardRef}
             >
-              {cards
+              {brands
                 .slice(currentIndex, currentIndex + numCardsToShow)
                 .map((card, index) => (
                   <Grid key={index} item >
-                    <BrandCardRenderer />
+                    <BrandCardRenderer data={card} />
                   </Grid>
                 ))}
             </Grid>

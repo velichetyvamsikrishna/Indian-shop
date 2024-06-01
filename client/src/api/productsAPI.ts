@@ -151,3 +151,20 @@ export const useGetProductsByCategoryAPI=async (categoryId:any):Promise<any[]>=>
 		return [];
 	}
 }
+
+export const  useGetBrandsAPI = async () => {
+	const url = apiConfig.POST.BRANDS;
+
+	try{
+		const categories=await api.post(url);
+		if(categories.data.status==="success"){
+			return categories.data.brands;
+		}
+		else{
+			return [];
+		}
+	}catch(error){
+		console.log(error);
+		return [];
+	}
+};
