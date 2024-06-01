@@ -8,7 +8,10 @@ import CartDrawerRenderer from "../Components-Cart/Cart-Drawer-Renderer";
 import { useGetAllCategoriesAPI, useCategoriesAPI } from "./../../api/productsAPI";
 import { Item } from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 import { useNavigate } from 'react-router-dom';
-
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
+import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -39,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuItem: {
     display: 'flex',
+    justifyContent:'flex-start',
     alignItems: 'center',
     padding: theme.spacing(1, 2),
     color: '#323232',
@@ -46,6 +50,18 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     fontSize: 14,
     lineHeight: '24px',
+    textTransform: 'capitalize'
+  },
+  categoryMenuItem: {
+    display: 'flex',
+    justifyContent:'flex-start',
+    alignItems: 'center',
+    // padding: theme.spacing(1, 2),
+    color: '#323232',
+    fontFamily: 'Proxima Nova',
+    fontWeight: 500,
+    fontSize: 14,
+    lineHeight: '15px',
     textTransform: 'capitalize'
   },
   searchContainer: {
@@ -91,6 +107,17 @@ const NavbarRenderer = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [categories, setCategories] = useState<any[]>([]);
+
+  //category menu
+  const [categoryMenuAnchor, setCategoryMenuAnchor]=useState<null | HTMLElement>(null);
+  const menuCategoryOpen=Boolean(categoryMenuAnchor);
+  const handleClickMenuCategory = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setCategoryMenuAnchor(event.currentTarget);
+  };
+  const handleCloseMenuCategory = () => {
+    setCategoryMenuAnchor(null);
+  };
+
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -99,7 +126,6 @@ const NavbarRenderer = () => {
   };
   const fetchCategories = async () => {
     const data = await useCategoriesAPI();
-    
     setCategories(data);
   };
   const handleCartClick = () => {
@@ -113,6 +139,10 @@ const NavbarRenderer = () => {
    navigate(`/productList/category/${categoryId}`);
   // alert(categoryId);
   }
+  
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
@@ -165,24 +195,44 @@ const NavbarRenderer = () => {
         </Toolbar>
         <Toolbar>
           <div className={classes.menuContainer}>
-            {categories.map((x) => {
-              return (
-                <div className={classes.menuItem}>
-                 <span style={{cursor:"pointer"}} onClick={()=>handleCategoryClick(x.CAT_ID)}> {x.CAT_NAME} </span>
-                 {/* to={`/productList/category/${x.CAT_ID}`} */}
-                  </div>
-              );
-            })}
-
-            {/* <div className={classes.menuItem}>Rice Products</div>
-            <div className={classes.menuItem}>Flour Products</div>
-            <div className={classes.menuItem}>Pulses and Spices</div>
-            <div className={classes.menuItem}>Beverages</div>
-            <div className={classes.menuItem}>Oil and Ghee</div>
-            <div className={classes.menuItem}>Household</div>
-            <div className={classes.menuItem}>Deal of the Day</div>
-            <div className={classes.menuItem}>Discounts</div> */}
+            <Button
+              id="category_list"
+              aria-controls={menuCategoryOpen ? 'category-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={menuCategoryOpen ? 'true' : undefined}
+              onClick={handleClickMenuCategory}
+            >
+              Categories
+                {
+                  menuCategoryOpen ? <KeyboardArrowDownOutlinedIcon /> : <KeyboardArrowUpOutlinedIcon />
+                }
+            </Button>
+            
+            <Menu
+              id="cateogry-menu"
+              anchorEl={categoryMenuAnchor}
+              open={menuCategoryOpen}
+              onClose={handleCloseMenuCategory}
+              MenuListProps={{
+                'aria-labelledby': 'category_list',
+              }}
+              style={{height:"500px"}}
+            >
+              {
+                categories.map((x) => {
+                  return (
+                    <div className={classes.menuItem}>
+                      <MenuItem onClick={()=>handleCategoryClick(x.CAT_ID)}  className={classes.categoryMenuItem}>{x.CAT_NAME}</MenuItem>  
+                    </div>
+                  );
+                })
+              }
+            </Menu>
+            
           </div>
+          <div className={classes.menuContainer}><Button>Best Sellers</Button></div> 
+          <div className={classes.menuContainer}><Button>New Arrivals</Button></div> 
+          <div className={classes.menuContainer}><Button>On Sale</Button></div> 
         </Toolbar>
       </AppBar>
     </div>
