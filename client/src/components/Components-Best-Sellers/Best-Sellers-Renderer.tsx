@@ -11,14 +11,12 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import GroceryItemCardRenderer from "../Grocery-Item-Card/Grocery-Item-Card-Renderer";
 import { useStyles } from "./Best-Sellers.styles";
-//api
 import { useGetProductsByFilterAPI } from "../../api/productsAPI";
 
 
 const BestSellersRenderer: React.FC = () => {
   const classes = useStyles();
-  // const cards = [1, 2, 3, 4, 5, 6]; 
-  const [cards,setCards]=useState<any[]>([]);// products
+  const [cards, setCards]=useState<any[]>([]); // products
   const cardRef = useRef<HTMLDivElement>(null);
   const [numCardsToShow, setNumCardsToShow] = useState(4); // Initial number of cards to show
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -38,12 +36,21 @@ const BestSellersRenderer: React.FC = () => {
     handleResize(); // Call the function initially
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  useEffect(()=>{
+
+  useEffect(() => {
     updateBestSellers();
-  },[]);
-  const updateBestSellers=async ()=>{
-    setCards(await useGetProductsByFilterAPI({"filter":"Bestsellers"}));
-  }
+  }, []);
+
+  const updateBestSellers = () => {
+    useGetProductsByFilterAPI({ filter: "Bestsellers" })
+      .then((products) => {
+        setCards(products);
+      })
+      .catch((error) => {
+        console.log("Failed to fetch best sellers:", error);
+        setCards([]); // Optionally set to an empty array or handle it as needed
+      });
+  };
   
 
   const handlePrev = () => {
@@ -63,7 +70,8 @@ const BestSellersRenderer: React.FC = () => {
           <Typography variant="h4" className={classes.mainTitle}>
             Best Sellers
           </Typography>
-          <div className={classes.cardContainer}>
+          {cards.length > 0 ? (
+            <div className={classes.cardContainer}>
             <IconButton
               className={`${classes.arrowButton} ${classes.leftArrow}`}
               onClick={handlePrev}
@@ -93,6 +101,11 @@ const BestSellersRenderer: React.FC = () => {
               <ChevronRightIcon fontSize="large" />
             </IconButton>
           </div>
+          ): 
+          <Typography variant="h6" className={classes.mainTitle}>
+            No Data Found
+          </Typography>
+          }
         </div>
       {/* </Container> */}
     </div>

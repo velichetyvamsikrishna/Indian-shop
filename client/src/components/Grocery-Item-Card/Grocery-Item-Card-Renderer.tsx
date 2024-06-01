@@ -44,25 +44,30 @@ const GroceryItemCardRenderer = (product:any) => {
           <CardContent className={classes.title}>{item.title}</CardContent>
           <CardContent className={classes.price}>{item.pricePerVolume}</CardContent>
           <CardContent className={classes.priceContainer}>
-            <Typography className={classes.priceValue}>{item.currentPrice} {item.originalPrice}</Typography>
+            <Typography className={classes.priceValue}>
+              € {item.currentPrice}
+            </Typography>
+            <Typography className={classes.originalPrice}>
+              {item.originalPrice}
+            </Typography>
           </CardContent>
-          <CardActions className={classes.actionButtonsContainer}>
-            <IconButton className={classes.cardItemIcons}>
-              <RemoveIcon />
-            </IconButton>
-            <TextField
-              className={classes.cardItemTextField}
-              variant="outlined"
-              size="small"
-            />
-            <IconButton className={classes.cardItemIcons}>
-              <AddIcon />
-            </IconButton>
-            <div className={classes.addButton}>
-              <div className={classes.addText}>Add</div>
-            </div>
-          </CardActions>
-        </Card>
+      {/* <CardActions className={classes.actionButtonsContainer}>
+        <IconButton className={classes.cardItemIcons}>
+          <RemoveIcon />
+        </IconButton>
+        <TextField
+          className={classes.cardItemTextField}
+          variant="outlined"
+          size="small"
+        />
+        <IconButton className={classes.cardItemIcons}>
+          <AddIcon />
+        </IconButton>
+        <div className={classes.addButton}>
+          <div className={classes.addText}>Add</div>
+        </div>
+      </CardActions> */}       
+      </Card>
       }
     </>
   );

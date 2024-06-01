@@ -9,8 +9,9 @@ const useStyles = makeStyles((theme) => ({
   banner: {
     width: "100%",
     height: 540,
-    // backgroundImage: backgroundImage, Not working need to fix it
-    background: "linear-gradient(78deg, #0D3823 0%, #8DEDBE 100%)",
+    backgroundImage: `linear-gradient(78deg, #0D3823 0%, #8DEDBE 100%), url(${'../Images/Homepage_Banner.png'})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
   },
   content: {
     padding: theme.spacing(4),
