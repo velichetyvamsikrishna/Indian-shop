@@ -36,7 +36,7 @@ const FooterRenderer: React.FC = () => {
           />
         </Grid>
 
-        <Grid item xs={12} sm={9} md={6} lg={3}>
+        {/* <Grid item xs={12} sm={9} md={6} lg={3}>
           <Typography style={{ fontSize: 16, fontFamily: 'Proxima Nova', paddingBottom: 20, fontWeight: 900, }}>All Categories</Typography>
           <Typography>Row 1</Typography>
           <Typography>Row 2</Typography>
@@ -63,7 +63,7 @@ const FooterRenderer: React.FC = () => {
           <Typography>Row 4</Typography>
           <Typography>Row 5</Typography>
 
-        </Grid>
+        </Grid> */}
       </Grid>
       {/* Social Media Links */}
       <Grid container spacing={10} justifyContent="flex-start" alignItems="flex-start" style={{ paddingLeft: 100, paddingRight: 100, paddingBottom: 50 }}>
@@ -103,13 +103,13 @@ const FooterRenderer: React.FC = () => {
           <Typography >
             Call Us:
           </Typography>
-          <Typography variant="body1">+39 02 8965 6178</Typography>
+          <Typography variant="body1">+39 328 428 8799</Typography>
         </Grid>
         <Grid item  xs={12} sm={9} md={6} lg={3}>
           <Typography>
             Write Us:
           </Typography>
-          <Typography variant="body1">Business@Email.com</Typography>
+          <Typography variant="body1">mahomedali30@gmail.com</Typography>
         </Grid>
         <Grid item  xs={12} sm={9} md={6} lg={3}>
           <Typography variant="body1" >
@@ -126,7 +126,7 @@ const FooterRenderer: React.FC = () => {
         align="center"
         style={{ paddingTop: "16px", height: 38, background: '#438866', textAlign: 'center', color: 'white', fontSize: 14, fontFamily: 'Proxima Nova', fontWeight: '500', wordWrap: 'break-word' }}
       >
-        &copy; {new Date().getFullYear()} Your Company Name. All rights
+        &copy; {new Date().getFullYear()} Designed By InfyAir SRL. All rights
         reserved.
       </Typography>
     </footer>
