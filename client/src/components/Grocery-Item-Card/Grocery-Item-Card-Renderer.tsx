@@ -46,7 +46,7 @@ const GroceryItemCardRenderer = (product:any) => {
           <CardContent className={classes.priceContainer}>
             <Typography className={classes.priceValue}>{item.currentPrice} {item.originalPrice}</Typography>
           </CardContent>
-          <CardActions className={classes.actionButtonsContainer}>
+          {/* <CardActions className={classes.actionButtonsContainer}>
             <IconButton className={classes.cardItemIcons}>
               <RemoveIcon />
             </IconButton>
@@ -61,7 +61,7 @@ const GroceryItemCardRenderer = (product:any) => {
             <div className={classes.addButton}>
               <div className={classes.addText}>Add</div>
             </div>
-          </CardActions>
+          </CardActions> */}
         </Card>
       }
     </>

@@ -66,7 +66,6 @@ const GoogleReviewsRenderer: React.FC = () => {
       const availableWidth = reviewDivRef.current.offsetWidth;
       const newReviewsToShow = Math.floor(availableWidth / reviewWidth);
       setReviewsToShow(Math.max(newReviewsToShow, 1)); // Ensure at least 1 card is shown
-
     }
   };
   useEffect(() => {

@@ -23,8 +23,9 @@ const ProductListingPageRenderer: React.FC = () => {
 
   const {categoryid}=useParams();
   useEffect(()=>{
+    console.log("being rendered");
     updateProducts();
-  },[]);
+  },[categoryid]);
   const updateProducts=async ()=>{
     const productsList=await useGetProductsByCategoryIDAPI(categoryid);
     console.log(productsList);

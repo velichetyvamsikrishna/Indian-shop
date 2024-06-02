@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Toolbar, Typography, IconButton, InputBase, Divider, Button } from '@material-ui/core';
+import { AppBar, Toolbar, Typography, IconButton, InputBase, Divider, Button, Hidden } from '@material-ui/core';
 import { ShoppingCart, ArrowDropDown } from '@mui/icons-material';
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -12,6 +12,16 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
 import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
+import Avatar from '@mui/material/Avatar';
+import LoyaltyIcon from '@material-ui/icons/Loyalty';
+import LocalOfferIcon from '@material-ui/icons/LocalOffer';
+import apiConfig from "../../api/client/endpoint";
+import { green } from '@material-ui/core/colors';
+import Box from '@material-ui/core';
+import LocationSearchRenderer from './Location-Search-Renderer';
+const BASE_URL = apiConfig.BASE_URL;
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -34,6 +44,11 @@ const useStyles = makeStyles((theme) => ({
   menuContainer: {
     display: 'flex',
     alignItems: 'center',
+  },
+  menuContainerGreen: {
+    display: 'flex',
+    alignItems: 'center',
+    color:'green'
   },
   locationContainer: {
     display: 'flex',
@@ -108,16 +123,24 @@ const NavbarRenderer = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [categories, setCategories] = useState<any[]>([]);
 
-  //category menu
+  //category menu dropdown
   const [categoryMenuAnchor, setCategoryMenuAnchor]=useState<null | HTMLElement>(null);
   const menuCategoryOpen=Boolean(categoryMenuAnchor);
+  
   const handleClickMenuCategory = (event: React.MouseEvent<HTMLButtonElement>) => {
+
     setCategoryMenuAnchor(event.currentTarget);
+    
   };
   const handleCloseMenuCategory = () => {
     setCategoryMenuAnchor(null);
   };
-
+  const handleCategoryClick=(categoryId:number)=>{
+    handleCloseMenuCategory();
+    navigate(`/app/productList/category/${categoryId}`);
+   // alert(categoryId);
+   }
+//end
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -135,10 +158,7 @@ const NavbarRenderer = () => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleCategoryClick=(categoryId:number)=>{
-   navigate(`/productList/category/${categoryId}`);
-  // alert(categoryId);
-  }
+  
   
   const handleClose = () => {
     setAnchorEl(null);
@@ -149,11 +169,14 @@ const NavbarRenderer = () => {
         <Toolbar>
           <div style={{ width: 151, height: 44, background: '#F2F2F2', alignContent: 'center', marginLeft: 14 }}>
             <Typography variant="h1" className={classes.logo}>
+              
               Indian Shop
             </Typography>
           </div>
           <div className={classes.locationContainer}>
-            <div className={classes.menuItem}>New York</div>
+            <div className={classes.menuItem}>
+              <LocationSearchRenderer />
+            </div>
             <ArrowDropDown style={{ color: '#FF6600' }} />
           </div>
           <Divider
@@ -212,6 +235,7 @@ const NavbarRenderer = () => {
               id="cateogry-menu"
               anchorEl={categoryMenuAnchor}
               open={menuCategoryOpen}
+              
               onClose={handleCloseMenuCategory}
               MenuListProps={{
                 'aria-labelledby': 'category_list',
@@ -222,7 +246,25 @@ const NavbarRenderer = () => {
                 categories.map((x) => {
                   return (
                     <div className={classes.menuItem}>
-                      <MenuItem onClick={()=>handleCategoryClick(x.CAT_ID)}  className={classes.categoryMenuItem}>{x.CAT_NAME}</MenuItem>  
+                      <MenuItem onClick={()=>handleCategoryClick(x.CAT_ID)}  className={classes.categoryMenuItem} 
+                        sx={[
+                          {
+                            '&:hover': {
+                              color: 'green',
+                              backgroundColor: 'white',
+                              fontWeight:'bold'
+                            },
+                          }
+                        ]}
+                      >
+                      <Avatar
+                          alt="Remy Sharp"
+                          src={`${BASE_URL}images/CATEGORIES/${x.CAT_ID}.png`}
+                          sx={{ width: 25, height: 25, mr:1 }}
+                          variant='square'
+                        />
+                        {x.CAT_NAME}
+                      </MenuItem>  
                     </div>
                   );
                 })
@@ -230,9 +272,25 @@ const NavbarRenderer = () => {
             </Menu>
             
           </div>
-          <div className={classes.menuContainer}><Button>Best Sellers</Button></div> 
-          <div className={classes.menuContainer}><Button>New Arrivals</Button></div> 
-          <div className={classes.menuContainer}><Button>On Sale</Button></div> 
+          <div className={classes.menuContainerGreen}>
+            <Button style={{color:'green', fontWeight:'bold'}}>
+              
+              <LoyaltyIcon />
+              
+              Best Sellers
+            </Button>
+          </div> 
+          <div className={classes.menuContainer}>
+            <Button style={{color:'green', fontWeight:'bold'}}>
+              New Arrivals
+            </Button>
+          </div> 
+          <div className={classes.menuContainerGreen}>
+            <Button style={{color:'green', fontWeight:'bold'}}>
+              <LoyaltyIcon />
+              On SALE
+            </Button>
+          </div> 
         </Toolbar>
       </AppBar>
     </div>
