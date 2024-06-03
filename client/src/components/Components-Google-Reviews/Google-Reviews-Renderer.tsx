@@ -1,40 +1,23 @@
 const mockReviews = [
   {
-    author_name: 'John Doe',
+    author_name: 'RAGHAVENDRA KUMAR',
     profile_photo_url: 'https://via.placeholder.com/150',
-    text: 'Great service!',
+    text: 'I frequently visit this Indian shop for my requirements pertaining to Indian goods and consistently find the experience to be highly satisfactory. The shopkeepers are notably welcoming and efficient in their service. For those in search of authentic Indian products, this venue comes highly recommended. Their inventory is comprehensive, and should you find an item missing, the staff are diligent in ensuring its availability on subsequent visits. I wholeheartedly endorse this shop not only for its extensive selection but also for the exceptional deals it offers to all customers.',
     rating: 5,
   },
   {
-    author_name: 'Jane Smith',
+    author_name: 'andrea tortorella',
     profile_photo_url: 'https://via.placeholder.com/150',
-    text: ' Very satisfied. Very satisfied. Very satisfied. Very satisfied. Very satisfied. Very satisfied. Very satisfied. Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied. Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.Very satisfied.',
-    rating: 4,
-  },
-  {
-    author_name: 'Bob Johnson',
-    profile_photo_url: 'https://via.placeholder.com/150',
-    text: 'Could be better.',
-    rating: 3,
-  },
-  {
-    author_name: 'Alice Williams',
-    profile_photo_url: 'https://via.placeholder.com/150',
-    text: 'Not happy with the service.',
-    rating: 2,
-  },
-  {
-    author_name: 'Michael Brown',
-    profile_photo_url: 'https://via.placeholder.com/150',
-    text: 'Excellent experience!',
+    text: ' The best in Milan. Seeing is believing. Great friendliness and excellent service. Ali Number One ',
     rating: 5,
   },
   {
-    author_name: 'Emily Davis',
+    author_name: 'Giada Peveri',
     profile_photo_url: 'https://via.placeholder.com/150',
-    text: 'Okay, but room for improvement.',
-    rating: 3,
-  }
+    text: 'I found king fisher and I am the happiest person in the world because of it! They have everything I ate/used in India, it is really well stocked! Well done!',
+    rating: 5,
+  },
+
 ];
 
 import React, { useEffect, useState, useRef } from 'react';
