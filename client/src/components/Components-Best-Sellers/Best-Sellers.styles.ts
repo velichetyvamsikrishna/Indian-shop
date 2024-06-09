@@ -5,7 +5,8 @@ export const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   mainTitle: {
-    marginBottom: theme.spacing(3),
+    marginBottom: theme.spacing(8),
+    paddingTop: theme.spacing(6)
   },
   cardContainer: {
     position: "relative",
@@ -26,6 +27,10 @@ export const useStyles = makeStyles((theme) => ({
   arrowButton: {
     backgroundColor: "transparent",
     color: theme.palette.text.primary,
+    height: 50,
+    width: 50,
+    paddingTop: 150,
+    margin: 'auto',
     "&:disabled": {
       color: theme.palette.text.disabled,
     },

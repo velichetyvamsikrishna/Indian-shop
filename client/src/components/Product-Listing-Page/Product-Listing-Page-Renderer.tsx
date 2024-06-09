@@ -16,6 +16,7 @@ import GroceryItemCardRenderer from "../Grocery-Item-Card/Grocery-Item-Card-Rend
 import SearchIcon from "@mui/icons-material/Search";
 //apis
 import { useGetProductsByCategoryIDAPI } from "../../api/productsAPI";
+import ProductsBannerRenderer from "../Components-Banner/Products-Banner-Renderer";
 
 const ProductListingPageRenderer: React.FC = () => {
   const classes = useStyles();
@@ -33,6 +34,8 @@ const ProductListingPageRenderer: React.FC = () => {
   }
 
   return (
+    <>
+    <ProductsBannerRenderer />
     <Container maxWidth="lg" className={classes.container}>
       <div className={classes.header}>
         <div className={classes.available} >
@@ -80,6 +83,7 @@ const ProductListingPageRenderer: React.FC = () => {
         ))}
       </Grid>
     </Container>
+    </>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, Typography, IconButton, InputBase, Divider, Button, Hidden } from '@material-ui/core';
-import { ShoppingCart, ArrowDropDown } from '@mui/icons-material';
+import { ShoppingCart, ArrowDropDown, Padding } from '@mui/icons-material';
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CartDrawerRenderer from "../Components-Cart/Cart-Drawer-Renderer";
@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     backgroundColor: '#F2F2F2',
     borderRadius: 6,
-    width: 432,
+    width: 632,
     marginRight: theme.spacing(2)
   },
   searchInput: {
@@ -96,7 +96,9 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '24px',
     '&::placeholder': {
       color: '#909592'
-    }
+    },
+    width: 632,
+    height: 50
   },
   searchIcon: {
     position: 'absolute',
@@ -108,6 +110,7 @@ const useStyles = makeStyles((theme) => ({
     height: 14.35,
     right: 10,
     top: '50%',
+    paddingRight: 20,
     transform: 'translateY(-50%)'
   },
   cartIcon: {
@@ -196,7 +199,7 @@ const NavbarRenderer = () => {
               className={classes.searchInput}
             />
             <div className={classes.searchIcon}>
-              <SearchIcon style={{ width: 24.35, height: 24.35 }} />
+              <SearchIcon style={{ width: 30, height: 30 }} />
             </div>
           </div>
           {/* <Button to="/login" style={{ marginLeft: "auto" }} className={classes.menuItem}>
@@ -205,7 +208,7 @@ const NavbarRenderer = () => {
           <Button to="/register" className={classes.menuItem}>
             Register
           </Button> */}
-          <IconButton
+          {/* <IconButton
             aria-label="cart"
             aria-controls="simple-menu"
             aria-haspopup="true"
@@ -214,9 +217,9 @@ const NavbarRenderer = () => {
           >
             <ShoppingCartIcon style={{ color: '#0D3823' }} onClick={handleCartClick} />
             <CartDrawerRenderer isOpen={isCartOpen} onClose={handleCartClose} />
-          </IconButton>
+          </IconButton> */}
         </Toolbar>
-        <Toolbar>
+        <Toolbar style={{gap: '50px'}}>
           <div className={classes.menuContainer}>
             <Button
               id="category_list"
@@ -227,7 +230,7 @@ const NavbarRenderer = () => {
             >
               Categories
                 {
-                  menuCategoryOpen ? <KeyboardArrowDownOutlinedIcon /> : <KeyboardArrowUpOutlinedIcon />
+                  menuCategoryOpen ? <KeyboardArrowDownOutlinedIcon style={{paddingLeft: '20px'}} /> : <KeyboardArrowUpOutlinedIcon style={{paddingLeft: '20px'}} />
                 }
             </Button>
             

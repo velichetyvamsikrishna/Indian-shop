@@ -10,9 +10,53 @@ import {
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import GroceryItemCardRenderer from "../Grocery-Item-Card/Grocery-Item-Card-Renderer";
-import { useStyles } from "../Components-Kitchen-Home-Supply/Kitchen-Home-Supply.styles";
 import BrandCardRenderer from "./Brand-Card-Renderer";
 import {  useGetBrandsAPI } from "./../../api/productsAPI";
+
+import { makeStyles } from "@material-ui/core/styles";
+
+export const useStyles = makeStyles((theme) => ({
+  root: {
+    textAlign: "center",
+  },
+  mainTitle: {
+    marginBottom: theme.spacing(8),
+    paddingTop: theme.spacing(6)
+  },
+  cardContainer: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  gridContainer: {
+    padding: theme.spacing(6), // Add spacing between arrows and cards
+    transition: "transform 0.3s ease-in-out", // Add transition for moving cards
+  },
+  arrowsContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  arrowButton: {
+    backgroundColor: "transparent",
+    color: theme.palette.text.primary,
+    height: 50,
+    width: 50,
+    margin: 'auto',
+    "&:disabled": {
+      color: theme.palette.text.disabled,
+    },
+  },
+  leftArrow: {
+    marginRight: theme.spacing(4), // Add spacing at the end of the screen for left arrow
+  },
+//   rightArrow: {
+//     marginLeft: theme.spacing(4), // Add spacing at the end of the screen for right arrow
+//   },
+}));
+
 
 const ShopByBrandRenderer: React.FC = () => {
   const classes = useStyles();
@@ -53,35 +97,6 @@ const ShopByBrandRenderer: React.FC = () => {
     const response = await useGetBrandsAPI();
     setBrands(response);
   };
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     if (cardRef.current) {
-  //       const cardWidth = 180; // Width of each card
-  //       const cardsWidth = cardRef.current.offsetWidth;
-  //       const containerWidth = cardsWidth - 300 - numCardsToShow*30; // Subtracting 100px padding from both sides
-  //       console.log("Container Width:", containerWidth);
-  //       const newNumCardsToShow = Math.floor(containerWidth / cardWidth);
-  //      // setNumCardsToShow(Math.max(newNumCardsToShow, 1)); // Ensure at least 1 card is shown
-  //       setNumCardsToShow(4); // Ensure at least 1 card is shown
-
-  //     }
-  //   };
-  
-  //   window.addEventListener("resize", handleResize);
-  //   handleResize(); // Call the function initially
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
-  
-
-  // const handlePrev = () => {
-  //   setCurrentIndex((prevIndex) => Math.max(0, prevIndex - numCardsToShow));
-  // };
-
-  // const handleNext = () => {
-  //   setCurrentIndex((prevIndex) =>
-  //     Math.min(cards.length - numCardsToShow, prevIndex + numCardsToShow)
-  //   );
-  // };
 
   return (
     <div style={{ padding: "100px" }}>
@@ -129,40 +144,3 @@ const ShopByBrandRenderer: React.FC = () => {
 };
 
 export default ShopByBrandRenderer;
-
-// // Define styles for the component
-// const useStyles2 = makeStyles((theme: Theme) =>
-//   createStyles({
-//     root: {
-//       flexGrow: 1,
-//       paddingTop: 50,
-//       paddingBottom: 150,
-//       paddingLeft: 40,
-//       paddingRight: 40,
-//     },
-//     media: {
-//       height: 300,
-//       width: "auto",
-//       margin: "auto",
-//     },
-//     cardContent: {
-//       textAlign: "left",
-//     },
-//     addButton: {
-//       marginTop: theme.spacing(2),
-//     },
-//     quantityControl: {
-//       display: "flex",
-//       alignItems: "center",
-//     },
-//     quantityInput: {
-//       width: 50,
-//       marginRight: theme.spacing(1),
-//       marginLeft: theme.spacing(1),
-//     },
-//     mainTitle: {
-//       textAlign: "center",
-//       marginBottom: theme.spacing(4),
-//     },
-//   })
-// );
