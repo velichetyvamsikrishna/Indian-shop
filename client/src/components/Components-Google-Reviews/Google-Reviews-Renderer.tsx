@@ -17,13 +17,34 @@ const mockReviews = [
     text: 'I found king fisher and I am the happiest person in the world because of it! They have everything I ate/used in India, it is really well stocked! Well done!',
     rating: 5,
   },
+  {
+    author_name: 'RAGHAVENDRA KUMAR',
+    profile_photo_url: 'https://via.placeholder.com/150',
+    text: 'I frequently visit this Indian shop for my requirements pertaining to Indian goods and consistently find the experience to be highly satisfactory. The shopkeepers are notably welcoming and efficient in their service. For those in search of authentic Indian products, this venue comes highly recommended. Their inventory is comprehensive, and should you find an item missing, the staff are diligent in ensuring its availability on subsequent visits. I wholeheartedly endorse this shop not only for its extensive selection but also for the exceptional deals it offers to all customers.',
+    rating: 5,
+  },
+  {
+    author_name: 'andrea tortorella',
+    profile_photo_url: 'https://via.placeholder.com/150',
+    text: ' The best in Milan. Seeing is believing. Great friendliness and excellent service. Ali Number One ',
+    rating: 5,
+  },
+  {
+    author_name: 'Giada Peveri',
+    profile_photo_url: 'https://via.placeholder.com/150',
+    text: 'I found king fisher and I am the happiest person in the world because of it! They have everything I ate/used in India, it is really well stocked! Well done!',
+    rating: 5,
+  },
 
 ];
 
 import React, { useEffect, useState, useRef } from 'react';
-import { Card, CardContent, Avatar, Typography, IconButton, Grid, Box } from '@mui/material';
+import { Card, CardContent, Avatar, Typography, IconButton, Grid, Box, Container } from '@mui/material';
 import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import axios from 'axios';
+import { useStyles } from "./Google-Reviews.styles";
 
 const PLACE_ID = 'YOUR_PLACE_ID';
 const API_KEY = 'YOUR_API_KEY';
@@ -37,25 +58,12 @@ interface Review {
 
 const GoogleReviewsRenderer: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>(mockReviews);
+  const classes = useStyles();
 
   //relating display of reviews
   const [currentIndex, setCurrentIndex] = useState(0);
   const [reviewsToShow, setReviewsToShow]=useState(4);
   const reviewDivRef = useRef<HTMLDivElement>(null);
-  const [reviewWidth,setReviewWidth]=useState(250);
-
-  const updateReviewsToShow = () => {
-    if (reviewDivRef.current) {
-      const availableWidth = reviewDivRef.current.offsetWidth;
-      const newReviewsToShow = Math.floor(availableWidth / reviewWidth);
-      setReviewsToShow(Math.max(newReviewsToShow, 1)); // Ensure at least 1 card is shown
-    }
-  };
-  useEffect(() => {
-    window.addEventListener("resize", updateReviewsToShow);
-    updateReviewsToShow();
-  }, []);
-
 
   //end
   useEffect(() => {
@@ -78,41 +86,51 @@ const GoogleReviewsRenderer: React.FC = () => {
   }, []);
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? 0 : prevIndex - reviewsToShow));
+    setCurrentIndex((prevIndex) => Math.max(0, prevIndex - reviewsToShow));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + reviewsToShow >= reviews.length ? prevIndex : prevIndex + reviewsToShow));
+    setCurrentIndex((prevIndex) =>
+      Math.min(mockReviews.length - reviewsToShow, prevIndex + reviewsToShow)
+    );
   };
 
   return (
-    <Box sx={{ textAlign: 'center', padding: 2 }}>
-      <Typography variant="h4" gutterBottom>
-        Customer Reviews
-      </Typography>
-      {reviews.length === 0 ? (
-        <Typography>No reviews available</Typography>
-      ) : (
-        <Box sx={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <IconButton onClick={handlePrev} disabled={currentIndex === 0} sx={{ position: 'absolute', left: 0 }}>
-            <ArrowBackIos />
-          </IconButton>
-          <Grid container spacing={2}
-                justifyContent={reviews.length>(currentIndex + reviewsToShow) ? "space-around" : "flex-start"}
-                sx={{ flexWrap: 'nowrap', overflowX: 'auto' }}
-                ref={reviewDivRef} >
-            {reviews.slice(currentIndex, currentIndex + reviewsToShow).map((review, index) => (
-              // <Grid item key={index} sx={{ flex: '0 0 auto', width: { xs: '100%', sm: 'calc(50% - 16px)', md: 'calc(33.333% - 16px)', lg: 'calc(25% - 16px)' }, background:"red" }}>
-              <Grid item key={index} width={reviewWidth} sx={{ flex: '0 0 auto'}}>
-                <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                  <CardContent>
+    <>
+      <div style={{display: 'flex'}}>
+        <IconButton
+          className={`${classes.arrowButton} ${classes.leftArrow}`}
+          onClick={handlePrev}
+          disabled={currentIndex === 0}
+        >
+          <ChevronLeftIcon fontSize="large" />
+        </IconButton>
+        <Container maxWidth="lg">
+          <div className={classes.root}>
+            <Typography variant="h4" className={classes.mainTitle} gutterBottom>
+              Customer Reviews
+            </Typography>
+
+            <Grid container spacing={8}>
+              {reviews.slice(currentIndex, currentIndex + reviewsToShow).map((review, index) => (
+                  <Grid
+                    item
+                    key={index}
+                    xs={12}
+                    sm={9}
+                    md={6}
+                    lg={3}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                   <CardContent>
                     <Box display="flex" alignItems="center" mb={2}>
                       <Avatar src={review.profile_photo_url} alt={review.author_name} />
-                      <Box ml={2}>
+                       <Box ml={2}>
                         <Typography variant="h6">{review.author_name}</Typography>
                       </Box>
-                    </Box>
-                    <Box 
+                     </Box>
+                     <Box 
                       height={100}
                       overflow={"auto"}
                       >
@@ -131,15 +149,20 @@ const GoogleReviewsRenderer: React.FC = () => {
                     </Box>
                   </CardContent>
                 </Card>
-              </Grid>
-            ))}
-          </Grid>
-          <IconButton onClick={handleNext} disabled={currentIndex + reviewsToShow >= reviews.length} sx={{ position: 'absolute', right: 0 }}>
-            <ArrowForwardIos />
-          </IconButton>
-        </Box>
-      )}
-    </Box>
+                  </Grid>
+                ))}
+            </Grid>
+          </div>  
+        </Container>
+        <IconButton
+          className={`${classes.arrowButton}`}
+          onClick={handleNext}
+          disabled={mockReviews.length - reviewsToShow <=0 || currentIndex === mockReviews.length - reviewsToShow}
+        >
+          <ChevronRightIcon fontSize="large" />
+        </IconButton>
+      </div>
+    </>
   );
 };
 
